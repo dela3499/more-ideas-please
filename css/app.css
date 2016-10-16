@@ -109,6 +109,7 @@ body {
 
 .combinations {
 	padding-bottom: 6vw;
+	height: 100%;
 }
 
 @media (min-width: 1000px) {
@@ -118,13 +119,29 @@ body {
 	}
 
 	.app {
-		width: 50%;
+		width: 30%;
 		margin: auto;
+	}
+
+	.app > * {
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 
 	.logo > * {
 		font-size: 4em;
 		line-height: 1em;
+	}
+
+	.intro img {
+		width: 30%;
+		display: block;
+		margin: auto;
+	}
+
+	.button-container {
+		padding-top: 20px;
+		padding-bottom: 20px;
 	}
 
 	.list-name {
@@ -134,4 +151,18 @@ body {
 	.intro p {
 		margin-bottom: 1em;
 	}
+
+	.lists-title {
+		padding-bottom: 10px;
+	}
+
+	.combinations-title {
+		padding-top: 20px;
+		padding-bottom: 10px;
+	}
+
+	.combinations {
+		line-height: 1.5em;
+	}
+
 }
