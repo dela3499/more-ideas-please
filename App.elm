@@ -1,8 +1,8 @@
 module App exposing (..)
 
-import Html exposing (Html, text, div, span, a, img, p)
+import Html exposing (Html, text, div, span, a, img, p, i, input)
 import Html.App as Html
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput, onSubmit)
 import Html.Attributes exposing (..)
 import Maybe exposing (withDefault)
 import Set exposing (Set)
@@ -10,7 +10,7 @@ import Dict exposing (Dict)
 import String
 
 import Types exposing (..)
-import Util 
+import Util exposing (dummyList)
 
 
 main = 
@@ -31,40 +31,149 @@ initModel: Model
 initModel = 
   { lists = 
       Dict.fromList
-        [ ("Places", ["home", "work", "school", "pool"])
-        , ("Hobbies", ["swimming", "playing guitar", "badminton"])
-        , ("Foods", ["burgers", "bacon", "sandwiches", "pizza"])
-        , ("Companies", ["Uber", "Google", "Facebook", "Apple"])
+        [ ("1", 
+            { id = "1"
+            , name = "Places"
+            , items = ["home", "work", "school", "pool"]
+            }
+          )
+        , ("2", 
+            { id = "2"
+            , name = "Hobbies"
+            , items = ["swimming", "playing guitar", "badminton"]
+            }
+          )
+        , ("3", 
+            { id = "3"
+            , name = "Foods"
+            , items = ["burgers", "bacon", "sandwiches", "pizza"]
+            }
+          )
+        , ("4", 
+            { id = "4"
+            , name = "Companies"
+            , items = ["Uber", "Google", "Facebook", "Apple"]
+            }
+          )
         ]
   , selected = 
       Set.fromList
-        [ "Places", "Foods" ]
+        [ "1", "2" ]
   , shuffle = False
+  , mode = Viewing--Editing NewList
+  , editList = 
+      { name = ""
+      , items = []
+      , item = ""
+      }
   }
 
 
 update: Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
   case msg of
-    ToggleSelected listName -> 
+    ToggleSelected listId -> 
       let selected' = 
-            Util.toggleMember listName model.selected
+            Util.toggleMember listId model.selected
       in
         ({ model | selected = selected' }, Cmd.none)
+
     ToggleShuffle -> 
-       ({ model | shuffle = not model.shuffle }, Cmd.none)
+      ({ model | shuffle = not model.shuffle }, Cmd.none)
+
+    SetMode mode -> 
+      ({ model | mode = mode }, Cmd.none)
+
+    SetListName name -> 
+      let editList = model.editList
+          editList' = { editList | name = name}
+      in 
+        ({ model | editList = editList' }, Cmd.none)
+
+    AddItem -> 
+      let editList = model.editList
+          editList' = 
+            { editList 
+              | items = editList.items ++ [editList.item]
+              , item = ""
+            }
+      in 
+        ({ model | editList = editList' }, Cmd.none)        
+
+    RemoveItem i -> 
+      let editList = model.editList
+          editList' = 
+            { editList 
+              | items = Util.dropNth editList.items i
+            }
+      in 
+        ({ model | editList = editList' }, Cmd.none)        
+
+    SetItem string -> 
+      let editList = model.editList
+          editList' = 
+            { editList 
+              | item = string
+            }
+      in 
+        ({ model | editList = editList' }, Cmd.none)           
+
+    Save -> 
+      let newList = 
+            { id = model.editList.name -- hack
+            , name = model.editList.name
+            , items = model.editList.items
+            }
+          editList = 
+            { name = ""
+            , items = []
+            , item = ""
+            }
+
+          lists = Dict.insert newList.id newList model.lists
+      in 
+        ({ model 
+            | lists = lists
+            , editList = editList
+         }, Cmd.none)
+
 
 
 view: Model -> Html Msg
 view model =
-  let getList name = 
-        Dict.get name model.lists
-          |> withDefault []
-      lists = 
+  div
+    [ class "app" ]
+    --[ case model.mode of
+    --    Viewing -> viewingBody model
+    --    Editing _ -> editingBody model
+    --]
+
+    [ logo
+    , intro
+    , case model.mode of
+        Viewing -> viewingBody model
+        Editing _ -> editingBody model
+    ]
+
+
+viewingBody: Model -> Html Msg
+viewingBody model = 
+  let lists = 
         model.selected
           |> Set.toList
-          |> List.map getList
+          |> List.map (\listId -> Dict.get listId model.lists)
+          |> Util.getJusts
+          |> List.map .items
           |> List.filter (\x -> (List.length x) > 0)
+      listNames = 
+        model.lists 
+          |> Dict.values 
+          |> List.map .name
+      listLengths = 
+        model.lists
+         |> Dict.values 
+         |> List.map .items
+         |> List.map List.length
       reorder = 
         if model.shuffle then
           Util.shuffle
@@ -75,22 +184,29 @@ view model =
           |> List.filter (\list -> List.length list > 0)
   in 
     div
-      [ class "app" ]
-      [ logo
-      , intro
-      , div 
+      [ class "body" ]
+      [ div 
           [ class "button-container" ]
           [ div
               [ class "lists-title" ]
               [ text "Lists" ]
           , div 
               [ class "list-names" ]
-              (List.map2 
+              (List.map
                 (listName model.selected) 
-                (Dict.keys model.lists)
-                (model.lists |> Dict.values |> List.map List.length)
-
+                (Dict.values model.lists)
               )
+          , i 
+              [ class "fa fa-pencil button edit"
+              , onClick (SetMode (Editing NewList))
+              ]
+              []
+          ]
+      , div
+          [ class "combinations-header" ]
+          [ div 
+              [ class "title" ]
+              [ text (Util.labelWithCount "Combinations" (List.length combinations))]
           , div 
               [ classList
                   [ ("shuffle", True)
@@ -99,15 +215,73 @@ view model =
                   ]
               , onClick ToggleShuffle
               ]
-              [ text "Shuffle" ]          
-          ]
-      , div 
-          [ class "combinations-title" ]
-          [ text (Util.labelWithCount "Combinations" (List.length combinations))]
+              [ text "shuffle" ]   
+          ]         
       , div
           [ class "combinations" ]
           (List.map combination combinations)
       ]
+
+
+editingBody: Model -> Html Msg
+editingBody model = 
+  div
+    [ class "body editing" ]
+    [ div 
+        [ class "button-container" ]
+        [ div
+            [ class "lists-title" ]
+            [ text "Edit lists" ]
+        , div 
+            [ class "list-names" ]
+            (List.map listNameEditing (Dict.values model.lists))
+        , i
+            [ class "fa fa-reply done button"
+            , onClick (SetMode Viewing)
+            ]
+            []
+        ]
+    , div 
+        [ class "input-container" ]
+        [ div
+            [ class "input-title"]
+            [ text "List name" ]
+        , input
+            [ class "list-name"
+            , placeholder "(e.g. favorite bands, apps, friends)"
+            , onInput SetListName
+            ]
+            []
+        , div
+            [ class "input-title"]
+            [ text "Items" ]
+        , div
+            [ class "items-container" ]
+            ( List.indexedMap item model.editList.items )
+        , div 
+            [ class "new-item field"]
+            [ div
+                [ class "input-title"]
+                [ text "New item" ]            
+            , input
+                [ class "item"
+                , placeholder "(e.g. Rush, Twitter, Norm)"
+                , onInput SetItem
+                ]
+                []
+            , i
+                [ class "fa fa-plus add-item button"
+                , onClick AddItem
+                ]
+                []
+            ]
+        , div 
+            [ class "save button" 
+            , onClick Save
+            ] 
+            [ text "save list" ]
+        ]
+    ]
 
 
 logo: Html Msg
@@ -127,7 +301,7 @@ intro =
     [ p [] [text p1]
     , p [] [text p2]
     , p [] [text p3]
-    , img [ src "img/equation.svg" ] []
+    , img [ src "assets/img/equation.svg" ] []
     , p [] [text p4]
     ]
 
@@ -138,17 +312,28 @@ p3 = "Here's another quick example. We'll take a list of letters, like A and Z, 
 p4 = "Check out the example below. There are four lists you can mix and match. Feel free to edit them too (just click on the pencil icon)."
 
 
-listName: Set String -> String -> Int -> Html Msg
-listName selected name nItems = 
+listName: Set ListId -> List' -> Html Msg
+listName selected list = 
   div
     [ classList
         [ ("list-name", True)
         , ("button", True)
-        , ("selected", Set.member name selected)  
+        , ("selected", Set.member list.id selected)  
         ]
-    , onClick (ToggleSelected name)
+    , onClick (ToggleSelected list.id)
     ]
-    [ text (Util.labelWithCount name nItems) ]  
+    [ text (Util.labelWithCount list.name (List.length list.items)) ]  
+
+
+listNameEditing: List' -> Html Msg
+listNameEditing list = 
+  div
+    [ classList
+        [ ("list-name", True)
+        , ("button", True)
+        ]
+    ]
+    [ text list.name ]      
 
 
 combination items =
@@ -157,5 +342,17 @@ combination items =
     [ items
         |> String.join ", "
         |> text
+    ]
+
+item: Int -> String -> Html Msg
+item i' item' = 
+  div
+    [ class "item" ]
+    [ i
+        [ class "fa fa-times remove-item button"
+        , onClick (RemoveItem i')
+        ]
+        []
+    , text item'
     ]
 

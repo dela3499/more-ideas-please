@@ -10,6 +10,7 @@ import Dict exposing (Dict)
 import Random.Array
 import Random
 import Array
+import Types exposing (..)
 
 
 toggleMember: String -> Set String -> Set String
@@ -49,3 +50,40 @@ shuffle x =
 labelWithCount: String -> Int -> String
 labelWithCount string number = 
   string ++ " (" ++ (toString number) ++ ")"    
+
+
+isJust: Maybe a -> Bool
+isJust x = 
+  case x of
+    Just _ -> True
+    Nothing -> False
+
+
+getJusts: List (Maybe a) -> List a
+getJusts maybes = 
+  let prependJust maybe justs = 
+        case maybe of
+          Just x -> x::justs
+          Nothing -> justs
+  in
+    List.foldl prependJust [] maybes
+
+
+dummyList: List'
+dummyList = 
+  { id = "edit"
+  , name = "my new list"
+  , items = []
+  }    
+
+
+dropNth list n = 
+  let keep i x = 
+        if i == n then
+          []
+        else 
+          [x]
+  in 
+    list
+      |> List.indexedMap keep
+      |> List.concat

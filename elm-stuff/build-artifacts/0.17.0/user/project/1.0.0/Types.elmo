@@ -1,8 +1,38 @@
-var _user$project$Types$Model = F3(
-	function (a, b, c) {
-		return {lists: a, selected: b, shuffle: c};
+var _user$project$Types$Model = F5(
+	function (a, b, c, d, e) {
+		return {lists: a, selected: b, shuffle: c, mode: d, editList: e};
 	});
+var _user$project$Types$List$ = F3(
+	function (a, b, c) {
+		return {id: a, name: b, items: c};
+	});
+var _user$project$Types$EditList = F3(
+	function (a, b, c) {
+		return {name: a, items: b, item: c};
+	});
+var _user$project$Types$Save = {ctor: 'Save'};
+var _user$project$Types$SetItem = function (a) {
+	return {ctor: 'SetItem', _0: a};
+};
+var _user$project$Types$RemoveItem = function (a) {
+	return {ctor: 'RemoveItem', _0: a};
+};
+var _user$project$Types$AddItem = {ctor: 'AddItem'};
+var _user$project$Types$SetListName = function (a) {
+	return {ctor: 'SetListName', _0: a};
+};
+var _user$project$Types$SetMode = function (a) {
+	return {ctor: 'SetMode', _0: a};
+};
 var _user$project$Types$ToggleShuffle = {ctor: 'ToggleShuffle'};
 var _user$project$Types$ToggleSelected = function (a) {
 	return {ctor: 'ToggleSelected', _0: a};
 };
+var _user$project$Types$Editing = function (a) {
+	return {ctor: 'Editing', _0: a};
+};
+var _user$project$Types$Viewing = {ctor: 'Viewing'};
+var _user$project$Types$ExistingList = function (a) {
+	return {ctor: 'ExistingList', _0: a};
+};
+var _user$project$Types$NewList = {ctor: 'NewList'};

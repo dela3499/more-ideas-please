@@ -9258,15 +9258,87 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _user$project$Types$Model = F3(
-	function (a, b, c) {
-		return {lists: a, selected: b, shuffle: c};
+var _user$project$Types$Model = F5(
+	function (a, b, c, d, e) {
+		return {lists: a, selected: b, shuffle: c, mode: d, editList: e};
 	});
+var _user$project$Types$List$ = F3(
+	function (a, b, c) {
+		return {id: a, name: b, items: c};
+	});
+var _user$project$Types$EditList = F3(
+	function (a, b, c) {
+		return {name: a, items: b, item: c};
+	});
+var _user$project$Types$Save = {ctor: 'Save'};
+var _user$project$Types$SetItem = function (a) {
+	return {ctor: 'SetItem', _0: a};
+};
+var _user$project$Types$RemoveItem = function (a) {
+	return {ctor: 'RemoveItem', _0: a};
+};
+var _user$project$Types$AddItem = {ctor: 'AddItem'};
+var _user$project$Types$SetListName = function (a) {
+	return {ctor: 'SetListName', _0: a};
+};
+var _user$project$Types$SetMode = function (a) {
+	return {ctor: 'SetMode', _0: a};
+};
 var _user$project$Types$ToggleShuffle = {ctor: 'ToggleShuffle'};
 var _user$project$Types$ToggleSelected = function (a) {
 	return {ctor: 'ToggleSelected', _0: a};
 };
+var _user$project$Types$Editing = function (a) {
+	return {ctor: 'Editing', _0: a};
+};
+var _user$project$Types$Viewing = {ctor: 'Viewing'};
+var _user$project$Types$ExistingList = function (a) {
+	return {ctor: 'ExistingList', _0: a};
+};
+var _user$project$Types$NewList = {ctor: 'NewList'};
 
+var _user$project$Util$dropNth = F2(
+	function (list, n) {
+		var keep = F2(
+			function (i, x) {
+				return _elm_lang$core$Native_Utils.eq(i, n) ? _elm_lang$core$Native_List.fromArray(
+					[]) : _elm_lang$core$Native_List.fromArray(
+					[x]);
+			});
+		return _elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$indexedMap, keep, list));
+	});
+var _user$project$Util$dummyList = {
+	id: 'edit',
+	name: 'my new list',
+	items: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _user$project$Util$getJusts = function (maybes) {
+	var prependJust = F2(
+		function (maybe, justs) {
+			var _p0 = maybe;
+			if (_p0.ctor === 'Just') {
+				return A2(_elm_lang$core$List_ops['::'], _p0._0, justs);
+			} else {
+				return justs;
+			}
+		});
+	return A3(
+		_elm_lang$core$List$foldl,
+		prependJust,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		maybes);
+};
+var _user$project$Util$isJust = function (x) {
+	var _p1 = x;
+	if (_p1.ctor === 'Just') {
+		return true;
+	} else {
+		return false;
+	}
+};
 var _user$project$Util$labelWithCount = F2(
 	function (string, number) {
 		return A2(
@@ -9283,12 +9355,12 @@ var _user$project$Util$labelWithCount = F2(
 var _user$project$Util$shuffle = function (x) {
 	var generator = _elm_community$random_extra$Random_Array$shuffle(
 		_elm_lang$core$Array$fromList(x));
-	var _p0 = A2(
+	var _p2 = A2(
 		_elm_lang$core$Random$step,
 		generator,
 		_elm_lang$core$Random$initialSeed(123));
-	var x$ = _p0._0;
-	var seed = _p0._1;
+	var x$ = _p2._0;
+	var seed = _p2._1;
 	return _elm_lang$core$Array$toList(x$);
 };
 var _user$project$Util$prependToAll = F2(
@@ -9305,15 +9377,15 @@ var _user$project$Util$combinations = function (lists) {
 		function (lists, accum) {
 			combine:
 			while (true) {
-				var _p1 = lists;
-				if (_p1.ctor === '::') {
-					var _v1 = _p1._1,
-						_v2 = A2(
+				var _p3 = lists;
+				if (_p3.ctor === '::') {
+					var _v3 = _p3._1,
+						_v4 = A2(
 						_elm_lang$core$List$concatMap,
 						_user$project$Util$prependToAll(accum),
-						_p1._0);
-					lists = _v1;
-					accum = _v2;
+						_p3._0);
+					lists = _v3;
+					accum = _v4;
 					continue combine;
 				} else {
 					return accum;
@@ -9334,6 +9406,29 @@ var _user$project$Util$toggleMember = F2(
 		return A2(_elm_lang$core$Set$member, value, set) ? A2(_elm_lang$core$Set$remove, value, set) : A2(_elm_lang$core$Set$insert, value, set);
 	});
 
+var _user$project$App$item = F2(
+	function (i$, item$) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('item')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('fa fa-times remove-item button'),
+							_elm_lang$html$Html_Events$onClick(
+							_user$project$Types$RemoveItem(i$))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[])),
+					_elm_lang$html$Html$text(item$)
+				]));
+	});
 var _user$project$App$combination = function (items) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -9347,8 +9442,25 @@ var _user$project$App$combination = function (items) {
 				A2(_elm_lang$core$String$join, ', ', items))
 			]));
 };
-var _user$project$App$listName = F3(
-	function (selected, name, nItems) {
+var _user$project$App$listNameEditing = function (list) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$classList(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'list-name', _1: true},
+						{ctor: '_Tuple2', _0: 'button', _1: true}
+					]))
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(list.name)
+			]));
+};
+var _user$project$App$listName = F2(
+	function (selected, list) {
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
@@ -9361,16 +9473,19 @@ var _user$project$App$listName = F3(
 							{
 							ctor: '_Tuple2',
 							_0: 'selected',
-							_1: A2(_elm_lang$core$Set$member, name, selected)
+							_1: A2(_elm_lang$core$Set$member, list.id, selected)
 						}
 						])),
 					_elm_lang$html$Html_Events$onClick(
-					_user$project$Types$ToggleSelected(name))
+					_user$project$Types$ToggleSelected(list.id))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
 					_elm_lang$html$Html$text(
-					A2(_user$project$Util$labelWithCount, name, nItems))
+					A2(
+						_user$project$Util$labelWithCount,
+						list.name,
+						_elm_lang$core$List$length(list.items)))
 				]));
 	});
 var _user$project$App$p4 = 'Check out the example below. There are four lists you can mix and match. Feel free to edit them too (just click on the pencil icon).';
@@ -9413,7 +9528,7 @@ var _user$project$App$intro = A2(
 			_elm_lang$html$Html$img,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$src('img/equation.svg')
+					_elm_lang$html$Html_Attributes$src('assets/img/equation.svg')
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[])),
@@ -9448,15 +9563,168 @@ var _user$project$App$logo = A2(
 		},
 		_elm_lang$core$Native_List.fromArray(
 			['more', 'ideas', 'please'])));
-var _user$project$App$view = function (model) {
+var _user$project$App$editingBody = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('body editing')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('button-container')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('lists-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Edit lists')
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('list-names')
+							]),
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$App$listNameEditing,
+							_elm_lang$core$Dict$values(model.lists))),
+						A2(
+						_elm_lang$html$Html$i,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('fa fa-reply done button'),
+								_elm_lang$html$Html_Events$onClick(
+								_user$project$Types$SetMode(_user$project$Types$Viewing))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[]))
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('input-container')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('input-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('List name')
+							])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('list-name'),
+								_elm_lang$html$Html_Attributes$placeholder('(e.g. favorite bands, apps, friends)'),
+								_elm_lang$html$Html_Events$onInput(_user$project$Types$SetListName)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('input-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Items')
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('items-container')
+							]),
+						A2(_elm_lang$core$List$indexedMap, _user$project$App$item, model.editList.items)),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('new-item field')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('input-title')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('New item')
+									])),
+								A2(
+								_elm_lang$html$Html$input,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('item'),
+										_elm_lang$html$Html_Attributes$placeholder('(e.g. Rush, Twitter, Norm)'),
+										_elm_lang$html$Html_Events$onInput(_user$project$Types$SetItem)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$html$Html$i,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('fa fa-plus add-item button'),
+										_elm_lang$html$Html_Events$onClick(_user$project$Types$AddItem)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[]))
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('save button'),
+								_elm_lang$html$Html_Events$onClick(_user$project$Types$Save)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('save list')
+							]))
+					]))
+			]));
+};
+var _user$project$App$viewingBody = function (model) {
 	var reorder = model.shuffle ? _user$project$Util$shuffle : _elm_lang$core$Basics$identity;
-	var getList = function (name) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			A2(_elm_lang$core$Dict$get, name, model.lists));
-	};
+	var listLengths = A2(
+		_elm_lang$core$List$map,
+		_elm_lang$core$List$length,
+		A2(
+			_elm_lang$core$List$map,
+			function (_) {
+				return _.items;
+			},
+			_elm_lang$core$Dict$values(model.lists)));
+	var listNames = A2(
+		_elm_lang$core$List$map,
+		function (_) {
+			return _.name;
+		},
+		_elm_lang$core$Dict$values(model.lists));
 	var lists = A2(
 		_elm_lang$core$List$filter,
 		function (x) {
@@ -9466,8 +9734,16 @@ var _user$project$App$view = function (model) {
 		},
 		A2(
 			_elm_lang$core$List$map,
-			getList,
-			_elm_lang$core$Set$toList(model.selected)));
+			function (_) {
+				return _.items;
+			},
+			_user$project$Util$getJusts(
+				A2(
+					_elm_lang$core$List$map,
+					function (listId) {
+						return A2(_elm_lang$core$Dict$get, listId, model.lists);
+					},
+					_elm_lang$core$Set$toList(model.selected)))));
 	var combinations = A2(
 		_elm_lang$core$List$filter,
 		function (list) {
@@ -9481,12 +9757,10 @@ var _user$project$App$view = function (model) {
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$class('app')
+				_elm_lang$html$Html_Attributes$class('body')
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_user$project$App$logo,
-				_user$project$App$intro,
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
@@ -9511,14 +9785,44 @@ var _user$project$App$view = function (model) {
 							[
 								_elm_lang$html$Html_Attributes$class('list-names')
 							]),
-						A3(
-							_elm_lang$core$List$map2,
+						A2(
+							_elm_lang$core$List$map,
 							_user$project$App$listName(model.selected),
-							_elm_lang$core$Dict$keys(model.lists),
-							A2(
-								_elm_lang$core$List$map,
-								_elm_lang$core$List$length,
-								_elm_lang$core$Dict$values(model.lists)))),
+							_elm_lang$core$Dict$values(model.lists))),
+						A2(
+						_elm_lang$html$Html$i,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('fa fa-pencil button edit'),
+								_elm_lang$html$Html_Events$onClick(
+								_user$project$Types$SetMode(
+									_user$project$Types$Editing(_user$project$Types$NewList)))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[]))
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('combinations-header')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(
+								A2(
+									_user$project$Util$labelWithCount,
+									'Combinations',
+									_elm_lang$core$List$length(combinations)))
+							])),
 						A2(
 						_elm_lang$html$Html$div,
 						_elm_lang$core$Native_List.fromArray(
@@ -9534,22 +9838,8 @@ var _user$project$App$view = function (model) {
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html$text('Shuffle')
+								_elm_lang$html$Html$text('shuffle')
 							]))
-					])),
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('combinations-title')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						A2(
-							_user$project$Util$labelWithCount,
-							'Combinations',
-							_elm_lang$core$List$length(combinations)))
 					])),
 				A2(
 				_elm_lang$html$Html$div,
@@ -9560,28 +9850,131 @@ var _user$project$App$view = function (model) {
 				A2(_elm_lang$core$List$map, _user$project$App$combination, combinations))
 			]));
 };
+var _user$project$App$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('app')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_user$project$App$logo,
+				_user$project$App$intro,
+				function () {
+				var _p0 = model.mode;
+				if (_p0.ctor === 'Viewing') {
+					return _user$project$App$viewingBody(model);
+				} else {
+					return _user$project$App$editingBody(model);
+				}
+			}()
+			]));
+};
 var _user$project$App$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'ToggleSelected') {
-			var selected$ = A2(_user$project$Util$toggleMember, _p0._0, model.selected);
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{selected: selected$}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'ToggleSelected':
+				var selected$ = A2(_user$project$Util$toggleMember, _p1._0, model.selected);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selected: selected$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleShuffle':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							shuffle: _elm_lang$core$Basics$not(model.shuffle)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetMode':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mode: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetListName':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{name: _p1._0});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'AddItem':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
 					{
-						shuffle: _elm_lang$core$Basics$not(model.shuffle)
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
+						items: A2(
+							_elm_lang$core$Basics_ops['++'],
+							editList.items,
+							_elm_lang$core$Native_List.fromArray(
+								[editList.item])),
+						item: ''
+					});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'RemoveItem':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{
+						items: A2(_user$project$Util$dropNth, editList.items, _p1._0)
+					});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetItem':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{item: _p1._0});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var editList = {
+					name: '',
+					items: _elm_lang$core$Native_List.fromArray(
+						[]),
+					item: ''
+				};
+				var newList = {id: model.editList.name, name: model.editList.name, items: model.editList.items};
+				var lists = A3(_elm_lang$core$Dict$insert, newList.id, newList, model.lists);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{lists: lists, editList: editList}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$App$initModel = {
@@ -9590,33 +9983,56 @@ var _user$project$App$initModel = {
 			[
 				{
 				ctor: '_Tuple2',
-				_0: 'Places',
-				_1: _elm_lang$core$Native_List.fromArray(
-					['home', 'work', 'school', 'pool'])
+				_0: '1',
+				_1: {
+					id: '1',
+					name: 'Places',
+					items: _elm_lang$core$Native_List.fromArray(
+						['home', 'work', 'school', 'pool'])
+				}
 			},
 				{
 				ctor: '_Tuple2',
-				_0: 'Hobbies',
-				_1: _elm_lang$core$Native_List.fromArray(
-					['swimming', 'playing guitar', 'badminton'])
+				_0: '2',
+				_1: {
+					id: '2',
+					name: 'Hobbies',
+					items: _elm_lang$core$Native_List.fromArray(
+						['swimming', 'playing guitar', 'badminton'])
+				}
 			},
 				{
 				ctor: '_Tuple2',
-				_0: 'Foods',
-				_1: _elm_lang$core$Native_List.fromArray(
-					['burgers', 'bacon', 'sandwiches', 'pizza'])
+				_0: '3',
+				_1: {
+					id: '3',
+					name: 'Foods',
+					items: _elm_lang$core$Native_List.fromArray(
+						['burgers', 'bacon', 'sandwiches', 'pizza'])
+				}
 			},
 				{
 				ctor: '_Tuple2',
-				_0: 'Companies',
-				_1: _elm_lang$core$Native_List.fromArray(
-					['Uber', 'Google', 'Facebook', 'Apple'])
+				_0: '4',
+				_1: {
+					id: '4',
+					name: 'Companies',
+					items: _elm_lang$core$Native_List.fromArray(
+						['Uber', 'Google', 'Facebook', 'Apple'])
+				}
 			}
 			])),
 	selected: _elm_lang$core$Set$fromList(
 		_elm_lang$core$Native_List.fromArray(
-			['Places', 'Foods'])),
-	shuffle: false
+			['1', '2'])),
+	shuffle: false,
+	mode: _user$project$Types$Viewing,
+	editList: {
+		name: '',
+		items: _elm_lang$core$Native_List.fromArray(
+			[]),
+		item: ''
+	}
 };
 var _user$project$App$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;

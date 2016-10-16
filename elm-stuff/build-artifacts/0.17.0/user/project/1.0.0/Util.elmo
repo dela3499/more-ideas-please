@@ -1,3 +1,45 @@
+var _user$project$Util$dropNth = F2(
+	function (list, n) {
+		var keep = F2(
+			function (i, x) {
+				return _elm_lang$core$Native_Utils.eq(i, n) ? _elm_lang$core$Native_List.fromArray(
+					[]) : _elm_lang$core$Native_List.fromArray(
+					[x]);
+			});
+		return _elm_lang$core$List$concat(
+			A2(_elm_lang$core$List$indexedMap, keep, list));
+	});
+var _user$project$Util$dummyList = {
+	id: 'edit',
+	name: 'my new list',
+	items: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _user$project$Util$getJusts = function (maybes) {
+	var prependJust = F2(
+		function (maybe, justs) {
+			var _p0 = maybe;
+			if (_p0.ctor === 'Just') {
+				return A2(_elm_lang$core$List_ops['::'], _p0._0, justs);
+			} else {
+				return justs;
+			}
+		});
+	return A3(
+		_elm_lang$core$List$foldl,
+		prependJust,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		maybes);
+};
+var _user$project$Util$isJust = function (x) {
+	var _p1 = x;
+	if (_p1.ctor === 'Just') {
+		return true;
+	} else {
+		return false;
+	}
+};
 var _user$project$Util$labelWithCount = F2(
 	function (string, number) {
 		return A2(
@@ -14,12 +56,12 @@ var _user$project$Util$labelWithCount = F2(
 var _user$project$Util$shuffle = function (x) {
 	var generator = _elm_community$random_extra$Random_Array$shuffle(
 		_elm_lang$core$Array$fromList(x));
-	var _p0 = A2(
+	var _p2 = A2(
 		_elm_lang$core$Random$step,
 		generator,
 		_elm_lang$core$Random$initialSeed(123));
-	var x$ = _p0._0;
-	var seed = _p0._1;
+	var x$ = _p2._0;
+	var seed = _p2._1;
 	return _elm_lang$core$Array$toList(x$);
 };
 var _user$project$Util$prependToAll = F2(
@@ -36,15 +78,15 @@ var _user$project$Util$combinations = function (lists) {
 		function (lists, accum) {
 			combine:
 			while (true) {
-				var _p1 = lists;
-				if (_p1.ctor === '::') {
-					var _v1 = _p1._1,
-						_v2 = A2(
+				var _p3 = lists;
+				if (_p3.ctor === '::') {
+					var _v3 = _p3._1,
+						_v4 = A2(
 						_elm_lang$core$List$concatMap,
 						_user$project$Util$prependToAll(accum),
-						_p1._0);
-					lists = _v1;
-					accum = _v2;
+						_p3._0);
+					lists = _v3;
+					accum = _v4;
 					continue combine;
 				} else {
 					return accum;

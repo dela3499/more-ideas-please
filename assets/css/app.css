@@ -17,9 +17,9 @@ body {
 	padding-top: 0;
 }
 
-.app > * {
+.logo, .intro, .body > * {
 	padding-left: 70px;
-	padding-right: 70px;
+	padding-right: 70px;	
 }
 
 .logo {
@@ -74,7 +74,7 @@ body {
 	overflow: auto;
 }
 
-.lists-title, .combinations-title {
+.lists-title, .combinations-header .title {
 	font-weight: bold;
 	padding-bottom: 2vw;
 }
@@ -103,11 +103,23 @@ body {
 	                              not supported by any browser */		
 }
 
-.combinations-title {
+.edit.button, .done.button {
+	float: right;
+	color: grey;
+	padding: 30px;
+	margin: -15px;
+}
+
+.combinations-header {
 	padding-top: 50px;
 }
 
+.combinations-header .title {
+	float: left;
+}
+
 .combinations {
+	clear: left;
 	padding-bottom: 6vw;
 	min-height: 100%;
 }
@@ -116,6 +128,90 @@ body {
 	border-bottom: 2px solid lightgrey;
 	padding-top: 2vw;
 	padding-bottom: 2vw;
+}
+
+/* editing */
+
+.body.editing .list-name {
+	color: rgba(0,0,0,0.8);
+}
+
+.body.editing .input-container {
+	padding-top: 30px;
+}
+
+.body.editing .input-title {
+	font-size: 4vw;
+	font-weight: bold;
+}
+
+.body.editing .input-container input {
+	width: 100%;
+	font-size: 5vw;
+	line-height: 6.5vw;
+	border: none;
+	border-bottom: 3px solid grey;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.input-container input, .items-container {
+	margin-bottom: 50px;
+}
+
+.body.editing .input-container input:focus {
+	border-bottom: 3px solid red;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.item {
+	color: rgba(0,0,0,0.7);
+}
+
+.item .remove-item.button {
+	color: rgba(0,0,0,0.3);
+	padding: 0.3em;
+}
+
+.body.editing .input-container input.item {
+	float: left;
+	/*width: 90%;*/
+}
+
+.new-item.field {
+	display: block;
+}
+
+.new-item.field:hover .add-item.button {
+	color: red;
+}
+
+.add-item.button {
+	color: rgba(0,0,0,0.3);
+	padding: 15px;
+	position: absolute;
+	right: 0;
+}
+
+.new-item.field {
+	position: relative;
+}
+
+
+.save.button {
+	display: block;
+	background: red;
+	color: white;
+	padding: 15px 20px 15px 20px;
+	clear: left;
+	font-weight: bold;
+	display: inline-block;
 }
 
 @media (min-width: 1000px) {
