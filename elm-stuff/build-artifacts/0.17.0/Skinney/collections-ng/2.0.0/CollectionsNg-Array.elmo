@@ -1,0 +1,270 @@
+var _Skinney$collections_ng$CollectionsNg_Array$translateIndex = F2(
+	function (idx, arr) {
+		var posIndex = (_elm_lang$core$Native_Utils.cmp(idx, 0) < 0) ? ((arr.length - 1) + idx) : idx;
+		return (_elm_lang$core$Native_Utils.cmp(posIndex, 0) < 0) ? 0 : ((_elm_lang$core$Native_Utils.cmp(posIndex, arr.length) > -1) ? (arr.length - 1) : posIndex);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$foldl$ = F4(
+	function (folder, acc, idx, arr) {
+		foldl$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(idx, arr.length)) {
+				return acc;
+			} else {
+				var _p0 = A3(_Skinney$collections_ng$CollectionsNg_Hamt$get, idx, idx, arr.nodes);
+				if (_p0.ctor === 'Just') {
+					var _v1 = folder,
+						_v2 = A2(folder, _p0._0, acc),
+						_v3 = idx + 1,
+						_v4 = arr;
+					folder = _v1;
+					acc = _v2;
+					idx = _v3;
+					arr = _v4;
+					continue foldl$;
+				} else {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'CollectionsNg.Array',
+						{
+							start: {line: 238, column: 9},
+							end: {line: 243, column: 65}
+						},
+						_p0)('This is a bug. Please report this.');
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$foldl = F3(
+	function (folder, init, arr) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Array$foldl$, folder, init, 0, arr);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$foldr$ = F4(
+	function (folder, acc, idx, arr) {
+		foldr$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(idx, -1)) {
+				return acc;
+			} else {
+				var _p2 = A3(_Skinney$collections_ng$CollectionsNg_Hamt$get, idx, idx, arr.nodes);
+				if (_p2.ctor === 'Just') {
+					var _v6 = folder,
+						_v7 = A2(folder, acc, _p2._0),
+						_v8 = idx - 1,
+						_v9 = arr;
+					folder = _v6;
+					acc = _v7;
+					idx = _v8;
+					arr = _v9;
+					continue foldr$;
+				} else {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'CollectionsNg.Array',
+						{
+							start: {line: 216, column: 9},
+							end: {line: 221, column: 65}
+						},
+						_p2)('This is a bug. Please report this.');
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$foldr = F3(
+	function (folder, init, arr) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Array$foldr$, folder, init, arr.length - 1, arr);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$set = F3(
+	function (idx, val, arr) {
+		return ((_elm_lang$core$Native_Utils.cmp(idx, arr.length) > -1) || (_elm_lang$core$Native_Utils.cmp(idx, 0) < 0)) ? arr : _elm_lang$core$Native_Utils.update(
+			arr,
+			{
+				nodes: A4(_Skinney$collections_ng$CollectionsNg_Hamt$set, idx, idx, val, arr.nodes)
+			});
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$get = F2(
+	function (idx, arr) {
+		return ((_elm_lang$core$Native_Utils.cmp(idx, arr.length) > -1) || (_elm_lang$core$Native_Utils.cmp(idx, 0) < 0)) ? _elm_lang$core$Maybe$Nothing : A3(_Skinney$collections_ng$CollectionsNg_Hamt$get, idx, idx, arr.nodes);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$push = F2(
+	function (a, arr) {
+		return {
+			length: arr.length + 1,
+			nodes: A4(_Skinney$collections_ng$CollectionsNg_Hamt$set, arr.length, arr.length, a, arr.nodes)
+		};
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$append = F2(
+	function (a, b) {
+		return A3(_Skinney$collections_ng$CollectionsNg_Array$foldl, _Skinney$collections_ng$CollectionsNg_Array$push, a, b);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$indexedMap$ = F4(
+	function (mapper, acc, idx, arr) {
+		indexedMap$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(idx, arr.length)) {
+				return acc;
+			} else {
+				var _p4 = A3(_Skinney$collections_ng$CollectionsNg_Hamt$get, idx, idx, arr.nodes);
+				if (_p4.ctor === 'Just') {
+					var _v11 = mapper,
+						_v12 = A2(
+						_Skinney$collections_ng$CollectionsNg_Array$push,
+						A2(mapper, idx, _p4._0),
+						acc),
+						_v13 = idx + 1,
+						_v14 = arr;
+					mapper = _v11;
+					acc = _v12;
+					idx = _v13;
+					arr = _v14;
+					continue indexedMap$;
+				} else {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'CollectionsNg.Array',
+						{
+							start: {line: 294, column: 9},
+							end: {line: 299, column: 65}
+						},
+						_p4)('This is a bug. Please report this.');
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$slice$ = F4(
+	function (from, to, acc, arr) {
+		slice$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.eq(from, to)) {
+				return acc;
+			} else {
+				var _p6 = A3(_Skinney$collections_ng$CollectionsNg_Hamt$get, from, from, arr.nodes);
+				if (_p6.ctor === 'Just') {
+					var _v16 = from + 1,
+						_v17 = to,
+						_v18 = A2(_Skinney$collections_ng$CollectionsNg_Array$push, _p6._0, acc),
+						_v19 = arr;
+					from = _v16;
+					to = _v17;
+					acc = _v18;
+					arr = _v19;
+					continue slice$;
+				} else {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'CollectionsNg.Array',
+						{
+							start: {line: 338, column: 9},
+							end: {line: 343, column: 65}
+						},
+						_p6)('This is a bug. Please report this.');
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$toList = function (arr) {
+	return A3(
+		_Skinney$collections_ng$CollectionsNg_Array$foldr,
+		F2(
+			function (acc, n) {
+				return A2(_elm_lang$core$List_ops['::'], n, acc);
+			}),
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		arr);
+};
+var _Skinney$collections_ng$CollectionsNg_Array$toIndexedList = function (arr) {
+	return A3(
+		_elm_lang$core$List$map2,
+		F2(
+			function (v0, v1) {
+				return {ctor: '_Tuple2', _0: v0, _1: v1};
+			}),
+		_elm_lang$core$Native_List.range(0, arr.length - 1),
+		_Skinney$collections_ng$CollectionsNg_Array$toList(arr));
+};
+var _Skinney$collections_ng$CollectionsNg_Array$initialize$ = F4(
+	function (stop, idx, f, acc) {
+		initialize$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(stop, idx) < 1) {
+				return acc;
+			} else {
+				var _v20 = stop,
+					_v21 = idx + 1,
+					_v22 = f,
+					_v23 = A2(
+					_Skinney$collections_ng$CollectionsNg_Array$push,
+					f(idx),
+					acc);
+				stop = _v20;
+				idx = _v21;
+				f = _v22;
+				acc = _v23;
+				continue initialize$;
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$length = function (arr) {
+	return arr.length;
+};
+var _Skinney$collections_ng$CollectionsNg_Array$isEmpty = function (arr) {
+	return _elm_lang$core$Native_Utils.eq(arr.length, 0);
+};
+var _Skinney$collections_ng$CollectionsNg_Array$pop = function (arr) {
+	if (_Skinney$collections_ng$CollectionsNg_Array$isEmpty(arr)) {
+		return arr;
+	} else {
+		var lastIndex = arr.length - 1;
+		return {
+			length: lastIndex,
+			nodes: A3(_Skinney$collections_ng$CollectionsNg_Hamt$remove, lastIndex, lastIndex, arr.nodes)
+		};
+	}
+};
+var _Skinney$collections_ng$CollectionsNg_Array$Array = F2(
+	function (a, b) {
+		return {length: a, nodes: b};
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$empty = A2(_Skinney$collections_ng$CollectionsNg_Array$Array, 0, _Skinney$collections_ng$CollectionsNg_Hamt$empty);
+var _Skinney$collections_ng$CollectionsNg_Array$initialize = F2(
+	function (stop, f) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Array$initialize$, stop, 0, f, _Skinney$collections_ng$CollectionsNg_Array$empty);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$repeat = F2(
+	function (n, e) {
+		return A2(
+			_Skinney$collections_ng$CollectionsNg_Array$initialize,
+			n,
+			_elm_lang$core$Basics$always(e));
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$fromList = function (ls) {
+	return A3(_elm_lang$core$List$foldl, _Skinney$collections_ng$CollectionsNg_Array$push, _Skinney$collections_ng$CollectionsNg_Array$empty, ls);
+};
+var _Skinney$collections_ng$CollectionsNg_Array$filter = F2(
+	function (pred, arr) {
+		var update = F2(
+			function (n, acc) {
+				return pred(n) ? A2(_Skinney$collections_ng$CollectionsNg_Array$push, n, acc) : acc;
+			});
+		return A3(_Skinney$collections_ng$CollectionsNg_Array$foldl, update, _Skinney$collections_ng$CollectionsNg_Array$empty, arr);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$map = F2(
+	function (mapper, arr) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Array$foldl,
+			F2(
+				function (n, acc) {
+					return A2(
+						_Skinney$collections_ng$CollectionsNg_Array$push,
+						mapper(n),
+						acc);
+				}),
+			_Skinney$collections_ng$CollectionsNg_Array$empty,
+			arr);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$indexedMap = F2(
+	function (mapper, arr) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Array$indexedMap$, mapper, _Skinney$collections_ng$CollectionsNg_Array$empty, 0, arr);
+	});
+var _Skinney$collections_ng$CollectionsNg_Array$slice = F3(
+	function (from, to, arr) {
+		var correctTo = A2(_Skinney$collections_ng$CollectionsNg_Array$translateIndex, to, arr);
+		var correctFrom = A2(_Skinney$collections_ng$CollectionsNg_Array$translateIndex, from, arr);
+		return (_Skinney$collections_ng$CollectionsNg_Array$isEmpty(arr) || (_elm_lang$core$Native_Utils.cmp(correctFrom, correctTo) > 0)) ? _Skinney$collections_ng$CollectionsNg_Array$empty : A4(_Skinney$collections_ng$CollectionsNg_Array$slice$, correctFrom, correctTo + 1, _Skinney$collections_ng$CollectionsNg_Array$empty, arr);
+	});

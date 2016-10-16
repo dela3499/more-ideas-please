@@ -1,0 +1,47 @@
+var _evancz$focus$Focus$update = F3(
+	function (_p0, f, big) {
+		var _p1 = _p0;
+		return A2(_p1._0.update, f, big);
+	});
+var _evancz$focus$Focus$set = F3(
+	function (_p2, small, big) {
+		var _p3 = _p2;
+		return A2(
+			_p3._0.update,
+			_elm_lang$core$Basics$always(small),
+			big);
+	});
+var _evancz$focus$Focus$get = F2(
+	function (_p4, big) {
+		var _p5 = _p4;
+		return _p5._0.get(big);
+	});
+var _evancz$focus$Focus$Focus = function (a) {
+	return {ctor: 'Focus', _0: a};
+};
+var _evancz$focus$Focus$create = F2(
+	function (get, update) {
+		return _evancz$focus$Focus$Focus(
+			{get: get, update: update});
+	});
+var _evancz$focus$Focus_ops = _evancz$focus$Focus_ops || {};
+_evancz$focus$Focus_ops['=>'] = F2(
+	function (_p7, _p6) {
+		var _p8 = _p7;
+		var _p11 = _p8._0;
+		var _p9 = _p6;
+		var _p10 = _p9._0;
+		var update = F2(
+			function (f, big) {
+				return A2(
+					_p11.update,
+					_p10.update(f),
+					big);
+			});
+		var get = function (big) {
+			return _p10.get(
+				_p11.get(big));
+		};
+		return _evancz$focus$Focus$Focus(
+			{get: get, update: update});
+	});

@@ -1,0 +1,113 @@
+body {
+	font-family: Arial;
+	margin: 0px;
+	padding: 0px;
+	font-size: 5vw;
+	line-height: 6.5vw;
+
+   	text-size-adjust: 100%; 
+    -ms-text-size-adjust: 100%; 
+    -moz-text-size-adjust: 100%; 
+    -webkit-text-size-adjust: 100%;	
+}
+
+.app {
+	width: 100%;
+	box-sizing: border-box;
+	padding-top: 0;
+}
+
+.app > * {
+	padding-left: 70px;
+	padding-right: 70px;
+}
+
+.logo {
+	padding-top: 40px;
+	padding-bottom: 30px;
+}
+
+.logo > * {
+	font-size: 15vw;
+	line-height: 13vw;	
+	font-weight: bold;
+	margin-left: -10px; /*hack to align left*/
+}
+
+.logo .more, .logo .please {
+	color: rgba(0,0,0,0.3);
+}
+
+.logo .ideas {
+	color: red;
+}
+
+.intro p {
+	margin-top: 40px;
+	margin-bottom: 80px;
+}
+
+.intro img {
+	width: 70%;
+	display: block;
+	margin: auto;
+}
+
+.button-container {
+	border-top: 10px solid red;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	background: rgba(0,0,0,0.05);
+}
+
+.list-name, .shuffle {
+	color: rgba(0,0,0,0.4);
+}
+
+.selected.list-name {
+	color: red;
+	font-weight: bold;
+}
+
+.button-container {
+	position: relative;
+	overflow: auto;
+}
+
+.lists-title, .combinations-title {
+	font-weight: bold;
+	padding-bottom: 2vw;
+}
+
+.list-names {
+	float: left;
+}
+
+.shuffle.button {
+	float: right;
+	font-style: italic;
+}
+
+.active.shuffle.button {
+	color: red;
+}
+
+.button {
+	cursor: pointer;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;           /* Non-prefixed version, currently
+	                              not supported by any browser */		
+}
+
+.combinations-title {
+	padding-top: 50px;
+}
+
+.combinations {
+	padding-bottom: 6vw;
+}
+

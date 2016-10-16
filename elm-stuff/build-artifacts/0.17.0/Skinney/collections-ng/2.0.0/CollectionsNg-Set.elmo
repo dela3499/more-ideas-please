@@ -1,0 +1,97 @@
+var _Skinney$collections_ng$CollectionsNg_Set$partition = F2(
+	function (p, d) {
+		return A2(
+			_Skinney$collections_ng$CollectionsNg_Dict$partition,
+			F2(
+				function (k, _p0) {
+					return p(k);
+				}),
+			d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$filter = F2(
+	function (p, d) {
+		return A2(
+			_Skinney$collections_ng$CollectionsNg_Dict$filter,
+			F2(
+				function (k, _p1) {
+					return p(k);
+				}),
+			d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$foldr = F3(
+	function (f, b, d) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$foldl = F3(
+	function (f, b, d) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Dict$foldr,
+			F3(
+				function (k, _p3, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$toList = function (d) {
+	return _Skinney$collections_ng$CollectionsNg_Dict$keys(d);
+};
+var _Skinney$collections_ng$CollectionsNg_Set$diff = F2(
+	function (d1, d2) {
+		return A2(_Skinney$collections_ng$CollectionsNg_Dict$diff, d1, d2);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$intersect = F2(
+	function (d1, d2) {
+		return A2(_Skinney$collections_ng$CollectionsNg_Dict$intersect, d1, d2);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$union = F2(
+	function (d1, d2) {
+		return A2(_Skinney$collections_ng$CollectionsNg_Dict$union, d1, d2);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$size = function (d) {
+	return _Skinney$collections_ng$CollectionsNg_Dict$size(d);
+};
+var _Skinney$collections_ng$CollectionsNg_Set$member = F2(
+	function (k, d) {
+		return A2(_Skinney$collections_ng$CollectionsNg_Dict$member, k, d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$isEmpty = function (d) {
+	return _Skinney$collections_ng$CollectionsNg_Dict$isEmpty(d);
+};
+var _Skinney$collections_ng$CollectionsNg_Set$remove = F2(
+	function (k, d) {
+		return A2(_Skinney$collections_ng$CollectionsNg_Dict$remove, k, d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$insert = F2(
+	function (k, d) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Dict$insert,
+			k,
+			{ctor: '_Tuple0'},
+			d);
+	});
+var _Skinney$collections_ng$CollectionsNg_Set$singleton = function (k) {
+	return A2(
+		_Skinney$collections_ng$CollectionsNg_Dict$singleton,
+		k,
+		{ctor: '_Tuple0'});
+};
+var _Skinney$collections_ng$CollectionsNg_Set$empty = _Skinney$collections_ng$CollectionsNg_Dict$empty;
+var _Skinney$collections_ng$CollectionsNg_Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _Skinney$collections_ng$CollectionsNg_Set$insert, _Skinney$collections_ng$CollectionsNg_Set$empty, xs);
+};
+var _Skinney$collections_ng$CollectionsNg_Set$map = F2(
+	function (f, s) {
+		return _Skinney$collections_ng$CollectionsNg_Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_Skinney$collections_ng$CollectionsNg_Set$toList(s)));
+	});

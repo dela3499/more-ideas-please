@@ -1,0 +1,8 @@
+var _user$project$Types$Model = F3(
+	function (a, b, c) {
+		return {lists: a, selected: b, shuffle: c};
+	});
+var _user$project$Types$ToggleShuffle = {ctor: 'ToggleShuffle'};
+var _user$project$Types$ToggleSelected = function (a) {
+	return {ctor: 'ToggleSelected', _0: a};
+};

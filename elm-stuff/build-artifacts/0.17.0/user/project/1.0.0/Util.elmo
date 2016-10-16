@@ -1,0 +1,53 @@
+var _user$project$Util$shuffle = function (x) {
+	var generator = _elm_community$random_extra$Random_Array$shuffle(
+		_elm_lang$core$Array$fromList(x));
+	var _p0 = A2(
+		_elm_lang$core$Random$step,
+		generator,
+		_elm_lang$core$Random$initialSeed(123));
+	var x$ = _p0._0;
+	var seed = _p0._1;
+	return _elm_lang$core$Array$toList(x$);
+};
+var _user$project$Util$prependToAll = F2(
+	function (xs, y) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (x) {
+				return A2(_elm_lang$core$List_ops['::'], y, x);
+			},
+			xs);
+	});
+var _user$project$Util$combinations = function (lists) {
+	var combine = F2(
+		function (lists, accum) {
+			combine:
+			while (true) {
+				var _p1 = lists;
+				if (_p1.ctor === '::') {
+					var _v1 = _p1._1,
+						_v2 = A2(
+						_elm_lang$core$List$concatMap,
+						_user$project$Util$prependToAll(accum),
+						_p1._0);
+					lists = _v1;
+					accum = _v2;
+					continue combine;
+				} else {
+					return accum;
+				}
+			}
+		});
+	return A2(
+		combine,
+		_elm_lang$core$List$reverse(lists),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$core$Native_List.fromArray(
+				[])
+			]));
+};
+var _user$project$Util$toggleMember = F2(
+	function (value, set) {
+		return A2(_elm_lang$core$Set$member, value, set) ? A2(_elm_lang$core$Set$remove, value, set) : A2(_elm_lang$core$Set$insert, value, set);
+	});

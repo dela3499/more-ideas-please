@@ -1,0 +1,280 @@
+var _user$project$App$combination = function (items) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('combination')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(
+				A2(_elm_lang$core$String$join, ', ', items))
+			]));
+};
+var _user$project$App$listName = F2(
+	function (selected, name) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$classList(
+					_elm_lang$core$Native_List.fromArray(
+						[
+							{ctor: '_Tuple2', _0: 'list-name', _1: true},
+							{ctor: '_Tuple2', _0: 'button', _1: true},
+							{
+							ctor: '_Tuple2',
+							_0: 'selected',
+							_1: A2(_elm_lang$core$Set$member, name, selected)
+						}
+						])),
+					_elm_lang$html$Html_Events$onClick(
+					_user$project$Types$ToggleSelected(name))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(name)
+				]));
+	});
+var _user$project$App$p4 = 'Check out the example below. There are four lists you can mix and match. Feel free to edit them too (just click on the pencil icon).';
+var _user$project$App$p3 = 'Here\'s another quick example. We\'ll take a list of letters, like A and Z, and combine it with a list of numbers, like 1, 2, and 3. Here are all the combinations.';
+var _user$project$App$p2 = 'What if you list ten of each? That\'s a hundred ideas! Since it\'s tedious to write out all those combinations, we\'ll do that.';
+var _user$project$App$p1 = 'Want some business ideas? List two hobbies, two business models, and all their combinations. That\'s four potentially-useful ideas!';
+var _user$project$App$intro = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('intro')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$p,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_user$project$App$p1)
+				])),
+			A2(
+			_elm_lang$html$Html$p,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_user$project$App$p2)
+				])),
+			A2(
+			_elm_lang$html$Html$p,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_user$project$App$p3)
+				])),
+			A2(
+			_elm_lang$html$Html$img,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$src('img/equation.svg')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A2(
+			_elm_lang$html$Html$p,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_user$project$App$p4)
+				]))
+		]));
+var _user$project$App$logo = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('logo')
+		]),
+	A2(
+		_elm_lang$core$List$map,
+		function (word) {
+			return A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class(word)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(word)
+					]));
+		},
+		_elm_lang$core$Native_List.fromArray(
+			['more', 'ideas', 'please'])));
+var _user$project$App$view = function (model) {
+	var reorder = model.shuffle ? _user$project$Util$shuffle : _elm_lang$core$Basics$identity;
+	var getList = function (name) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			A2(_elm_lang$core$Dict$get, name, model.lists));
+	};
+	var lists = A2(
+		_elm_lang$core$List$filter,
+		function (x) {
+			return _elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$List$length(x),
+				0) > 0;
+		},
+		A2(
+			_elm_lang$core$List$map,
+			getList,
+			_elm_lang$core$Set$toList(model.selected)));
+	var combinations = reorder(
+		_user$project$Util$combinations(lists));
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('app')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_user$project$App$logo,
+				_user$project$App$intro,
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('button-container')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('lists-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Lists')
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('list-names')
+							]),
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$App$listName(model.selected),
+							_elm_lang$core$Dict$keys(model.lists))),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$classList(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'shuffle', _1: true},
+										{ctor: '_Tuple2', _0: 'button', _1: true},
+										{ctor: '_Tuple2', _0: 'active', _1: model.shuffle}
+									])),
+								_elm_lang$html$Html_Events$onClick(_user$project$Types$ToggleShuffle)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Shuffle')
+							]))
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('combinations-title')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Combinations')
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('combinations')
+					]),
+				A2(_elm_lang$core$List$map, _user$project$App$combination, combinations))
+			]));
+};
+var _user$project$App$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'ToggleSelected') {
+			var selected$ = A2(_user$project$Util$toggleMember, _p0._0, model.selected);
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{selected: selected$}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						shuffle: _elm_lang$core$Basics$not(model.shuffle)
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
+	});
+var _user$project$App$initModel = {
+	lists: _elm_lang$core$Dict$fromList(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				{
+				ctor: '_Tuple2',
+				_0: 'Places',
+				_1: _elm_lang$core$Native_List.fromArray(
+					['home', 'work', 'school', 'pool'])
+			},
+				{
+				ctor: '_Tuple2',
+				_0: 'Hobbies',
+				_1: _elm_lang$core$Native_List.fromArray(
+					['swimming', 'playing guitar', 'badminton'])
+			},
+				{
+				ctor: '_Tuple2',
+				_0: 'Foods',
+				_1: _elm_lang$core$Native_List.fromArray(
+					['burgers', 'bacon', 'sandwiches', 'pizza'])
+			},
+				{
+				ctor: '_Tuple2',
+				_0: 'Companies',
+				_1: _elm_lang$core$Native_List.fromArray(
+					['Uber', 'Google', 'Facebook', 'Apple'])
+			}
+			])),
+	selected: _elm_lang$core$Set$fromList(
+		_elm_lang$core$Native_List.fromArray(
+			['Places', 'Foods'])),
+	shuffle: false
+};
+var _user$project$App$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$App$main = {
+	main: _elm_lang$html$Html_App$program(
+		{
+			init: {ctor: '_Tuple2', _0: _user$project$App$initModel, _1: _elm_lang$core$Platform_Cmd$none},
+			update: _user$project$App$update,
+			view: _user$project$App$view,
+			subscriptions: _user$project$App$subscriptions
+		})
+};

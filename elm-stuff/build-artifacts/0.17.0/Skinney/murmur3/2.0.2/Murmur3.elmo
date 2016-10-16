@@ -1,0 +1,102 @@
+var _Skinney$murmur3$Murmur3$mur = F2(
+	function (c, h) {
+		return A2(
+			_elm_lang$core$Bitwise$and,
+			(A2(_elm_lang$core$Bitwise$and, h, 65535) * c) + A2(
+				_elm_lang$core$Bitwise$shiftLeft,
+				A2(
+					_elm_lang$core$Bitwise$and,
+					A2(_elm_lang$core$Bitwise$shiftRightLogical, h, 16) * c,
+					65535),
+				16),
+			4294967295);
+	});
+var _Skinney$murmur3$Murmur3$step = function (acc) {
+	var h1 = A2(
+		_Skinney$murmur3$Murmur3$mur,
+		5,
+		A2(
+			_elm_lang$core$Bitwise$or,
+			A2(_elm_lang$core$Bitwise$shiftLeft, acc, 13),
+			A2(_elm_lang$core$Bitwise$shiftRightLogical, acc, 19)));
+	return (A2(_elm_lang$core$Bitwise$and, h1, 65535) + 27492) + A2(
+		_elm_lang$core$Bitwise$shiftLeft,
+		A2(
+			_elm_lang$core$Bitwise$and,
+			A2(_elm_lang$core$Bitwise$shiftRightLogical, h1, 16) + 58964,
+			65535),
+		16);
+};
+var _Skinney$murmur3$Murmur3$mix = F2(
+	function (h1, h2) {
+		var k1 = A2(_Skinney$murmur3$Murmur3$mur, 3432918353, h2);
+		var k2 = A2(
+			_Skinney$murmur3$Murmur3$mur,
+			461845907,
+			A2(
+				_elm_lang$core$Bitwise$or,
+				A2(_elm_lang$core$Bitwise$shiftLeft, k1, 15),
+				A2(_elm_lang$core$Bitwise$shiftRightLogical, k1, 17)));
+		return A2(_elm_lang$core$Bitwise$xor, h1, k2);
+	});
+var _Skinney$murmur3$Murmur3$finalize = F2(
+	function (strLength, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._1;
+		var _p2 = _p1._2;
+		var acc = (!_elm_lang$core$Native_Utils.eq(_p2, 0)) ? A2(_Skinney$murmur3$Murmur3$mix, _p3, _p2) : _p3;
+		var h1 = A2(_elm_lang$core$Bitwise$xor, acc, strLength);
+		var h2 = A2(
+			_Skinney$murmur3$Murmur3$mur,
+			2246822507,
+			A2(
+				_elm_lang$core$Bitwise$xor,
+				h1,
+				A2(_elm_lang$core$Bitwise$shiftRightLogical, h1, 16)));
+		var h3 = A2(
+			_Skinney$murmur3$Murmur3$mur,
+			3266489909,
+			A2(
+				_elm_lang$core$Bitwise$xor,
+				h2,
+				A2(_elm_lang$core$Bitwise$shiftRightLogical, h2, 13)));
+		var h4 = A2(
+			_elm_lang$core$Bitwise$xor,
+			h3,
+			A2(_elm_lang$core$Bitwise$shiftRightLogical, h3, 16));
+		return A2(_elm_lang$core$Bitwise$shiftRightLogical, h4, 0);
+	});
+var _Skinney$murmur3$Murmur3$hashFold = F2(
+	function (c, _p4) {
+		var _p5 = _p4;
+		var _p7 = _p5._0;
+		var _p6 = _p5._1;
+		var res = A2(
+			_elm_lang$core$Bitwise$or,
+			A2(
+				_elm_lang$core$Bitwise$shiftLeft,
+				A2(
+					_elm_lang$core$Bitwise$and,
+					_elm_lang$core$Char$toCode(c),
+					255),
+				_p7),
+			_p5._2);
+		if (_elm_lang$core$Native_Utils.cmp(_p7, 24) > -1) {
+			var newHash = _Skinney$murmur3$Murmur3$step(
+				A2(_Skinney$murmur3$Murmur3$mix, _p6, res));
+			return {ctor: '_Tuple3', _0: 0, _1: newHash, _2: 0};
+		} else {
+			return {ctor: '_Tuple3', _0: _p7 + 8, _1: _p6, _2: res};
+		}
+	});
+var _Skinney$murmur3$Murmur3$hashString = F2(
+	function (seed, str) {
+		return A2(
+			_Skinney$murmur3$Murmur3$finalize,
+			_elm_lang$core$String$length(str),
+			A3(
+				_elm_lang$core$String$foldl,
+				_Skinney$murmur3$Murmur3$hashFold,
+				{ctor: '_Tuple3', _0: 0, _1: seed, _2: 0},
+				str));
+	});

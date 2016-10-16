@@ -1,0 +1,631 @@
+var _Skinney$collections_ng$CollectionsNg_Hamt$countBits = function (bitmap) {
+	var b1 = bitmap - A2(
+		_elm_lang$core$Bitwise$and,
+		A2(_elm_lang$core$Bitwise$shiftRightLogical, bitmap, 1),
+		1431655765);
+	var b2 = A2(_elm_lang$core$Bitwise$and, b1, 858993459) + A2(
+		_elm_lang$core$Bitwise$and,
+		A2(_elm_lang$core$Bitwise$shiftRightLogical, b1, 2),
+		858993459);
+	return A2(
+		_elm_lang$core$Bitwise$shiftRightLogical,
+		A2(
+			_elm_lang$core$Bitwise$and,
+			b2 + A2(_elm_lang$core$Bitwise$shiftRightLogical, b2, 4),
+			252645135) * 16843009,
+		24);
+};
+var _Skinney$collections_ng$CollectionsNg_Hamt$hashPositionWithShift = F2(
+	function (shift, hash) {
+		return A2(
+			_elm_lang$core$Bitwise$and,
+			31,
+			A2(_elm_lang$core$Bitwise$shiftRightLogical, hash, shift));
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$setByIndex = F3(
+	function (idx, val, ls) {
+		var mask = A2(_elm_lang$core$Bitwise$shiftLeft, 1, idx);
+		var alteredBitmap = function () {
+			var _p0 = val;
+			if (_p0.ctor === 'Empty') {
+				return A2(_elm_lang$core$Bitwise$xor, ls.positionMap, mask);
+			} else {
+				return A2(_elm_lang$core$Bitwise$or, ls.positionMap, mask);
+			}
+		}();
+		var _p1 = idx;
+		switch (_p1) {
+			case 0:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i0: val});
+			case 1:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i1: val});
+			case 2:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i2: val});
+			case 3:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i3: val});
+			case 4:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i4: val});
+			case 5:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i5: val});
+			case 6:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i6: val});
+			case 7:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i7: val});
+			case 8:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i8: val});
+			case 9:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i9: val});
+			case 10:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i10: val});
+			case 11:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i11: val});
+			case 12:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i12: val});
+			case 13:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i13: val});
+			case 14:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i14: val});
+			case 15:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i15: val});
+			case 16:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i16: val});
+			case 17:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i17: val});
+			case 18:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i18: val});
+			case 19:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i19: val});
+			case 20:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i20: val});
+			case 21:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i21: val});
+			case 22:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i22: val});
+			case 23:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i23: val});
+			case 24:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i24: val});
+			case 25:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i25: val});
+			case 26:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i26: val});
+			case 27:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i27: val});
+			case 28:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i28: val});
+			case 29:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i29: val});
+			case 30:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i30: val});
+			case 31:
+				return _elm_lang$core$Native_Utils.update(
+					ls,
+					{positionMap: alteredBitmap, i31: val});
+			default:
+				return _elm_lang$core$Native_Utils.crashCase(
+					'CollectionsNg.Hamt',
+					{
+						start: {line: 217, column: 9},
+						end: {line: 315, column: 50}
+					},
+					_p1)('Index out of bounds');
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex = F2(
+	function (idx, ls) {
+		var _p3 = idx;
+		switch (_p3) {
+			case 0:
+				return ls.i0;
+			case 1:
+				return ls.i1;
+			case 2:
+				return ls.i2;
+			case 3:
+				return ls.i3;
+			case 4:
+				return ls.i4;
+			case 5:
+				return ls.i5;
+			case 6:
+				return ls.i6;
+			case 7:
+				return ls.i7;
+			case 8:
+				return ls.i8;
+			case 9:
+				return ls.i9;
+			case 10:
+				return ls.i10;
+			case 11:
+				return ls.i11;
+			case 12:
+				return ls.i12;
+			case 13:
+				return ls.i13;
+			case 14:
+				return ls.i14;
+			case 15:
+				return ls.i15;
+			case 16:
+				return ls.i16;
+			case 17:
+				return ls.i17;
+			case 18:
+				return ls.i18;
+			case 19:
+				return ls.i19;
+			case 20:
+				return ls.i20;
+			case 21:
+				return ls.i21;
+			case 22:
+				return ls.i22;
+			case 23:
+				return ls.i23;
+			case 24:
+				return ls.i24;
+			case 25:
+				return ls.i25;
+			case 26:
+				return ls.i26;
+			case 27:
+				return ls.i27;
+			case 28:
+				return ls.i28;
+			case 29:
+				return ls.i29;
+			case 30:
+				return ls.i30;
+			case 31:
+				return ls.i31;
+			default:
+				return _elm_lang$core$Native_Utils.crashCase(
+					'CollectionsNg.Hamt',
+					{
+						start: {line: 102, column: 5},
+						end: {line: 200, column: 46}
+					},
+					_p3)('Index out of bounds');
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$get$ = F4(
+	function (shift, hash, key, ls) {
+		get$:
+		while (true) {
+			var pos = A2(_Skinney$collections_ng$CollectionsNg_Hamt$hashPositionWithShift, shift, hash);
+			var node = A2(_Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex, pos, ls);
+			var _p5 = node;
+			switch (_p5.ctor) {
+				case 'Empty':
+					return _elm_lang$core$Maybe$Nothing;
+				case 'Element':
+					return _elm_lang$core$Native_Utils.eq(key, _p5._1) ? _elm_lang$core$Maybe$Just(_p5._2) : _elm_lang$core$Maybe$Nothing;
+				case 'SubTree':
+					var _v4 = shift + 5,
+						_v5 = hash,
+						_v6 = key,
+						_v7 = _p5._0;
+					shift = _v4;
+					hash = _v5;
+					key = _v6;
+					ls = _v7;
+					continue get$;
+				default:
+					var _p8 = A2(
+						_elm_community$list_extra$List_Extra$find,
+						function (_p6) {
+							var _p7 = _p6;
+							return _elm_lang$core$Native_Utils.eq(_p7._0, key);
+						},
+						_p5._1);
+					if (_p8.ctor === 'Just') {
+						return _elm_lang$core$Maybe$Just(_p8._0._1);
+					} else {
+						return _elm_lang$core$Maybe$Nothing;
+					}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$get = F3(
+	function (hash, key, ls) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Hamt$get$, 0, hash, key, ls);
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$foldl$ = F4(
+	function (folder, acc, pos, nl) {
+		foldl$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(pos, 31) > 0) {
+				return acc;
+			} else {
+				var _p9 = A2(_Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex, pos, nl);
+				switch (_p9.ctor) {
+					case 'Empty':
+						var _v11 = folder,
+							_v12 = acc,
+							_v13 = pos + 1,
+							_v14 = nl;
+						folder = _v11;
+						acc = _v12;
+						pos = _v13;
+						nl = _v14;
+						continue foldl$;
+					case 'Element':
+						var _v15 = folder,
+							_v16 = A3(folder, _p9._1, _p9._2, acc),
+							_v17 = pos + 1,
+							_v18 = nl;
+						folder = _v15;
+						acc = _v16;
+						pos = _v17;
+						nl = _v18;
+						continue foldl$;
+					case 'SubTree':
+						var _v19 = folder,
+							_v20 = A3(_Skinney$collections_ng$CollectionsNg_Hamt$foldl, folder, acc, _p9._0),
+							_v21 = pos + 1,
+							_v22 = nl;
+						folder = _v19;
+						acc = _v20;
+						pos = _v21;
+						nl = _v22;
+						continue foldl$;
+					default:
+						var colFold = F2(
+							function (_p10, acc) {
+								var _p11 = _p10;
+								return A3(folder, _p11._0, _p11._1, acc);
+							});
+						var _v24 = folder,
+							_v25 = A3(_elm_lang$core$List$foldl, colFold, acc, _p9._1),
+							_v26 = pos + 1,
+							_v27 = nl;
+						folder = _v24;
+						acc = _v25;
+						pos = _v26;
+						nl = _v27;
+						continue foldl$;
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$foldl = F3(
+	function (folder, acc, nl) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Hamt$foldl$, folder, acc, 0, nl);
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$size = function (nl) {
+	return A3(
+		_Skinney$collections_ng$CollectionsNg_Hamt$foldl,
+		F3(
+			function (_p13, _p12, acc) {
+				return acc + 1;
+			}),
+		0,
+		nl);
+};
+var _Skinney$collections_ng$CollectionsNg_Hamt$Tree = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return function (m) {
+													return function (n) {
+														return function (o) {
+															return function (p) {
+																return function (q) {
+																	return function (r) {
+																		return function (s) {
+																			return function (t) {
+																				return function (u) {
+																					return function (v) {
+																						return function (w) {
+																							return function (x) {
+																								return function (y) {
+																									return function (z) {
+																										return function (_1) {
+																											return function (_2) {
+																												return function (_3) {
+																													return function (_4) {
+																														return function (_5) {
+																															return function (_6) {
+																																return function (_7) {
+																																	return {positionMap: a, i0: b, i1: c, i2: d, i3: e, i4: f, i5: g, i6: h, i7: i, i8: j, i9: k, i10: l, i11: m, i12: n, i13: o, i14: p, i15: q, i16: r, i17: s, i18: t, i19: u, i20: v, i21: w, i22: x, i23: y, i24: z, i25: _1, i26: _2, i27: _3, i28: _4, i29: _5, i30: _6, i31: _7};
+																																};
+																															};
+																														};
+																													};
+																												};
+																											};
+																										};
+																									};
+																								};
+																							};
+																						};
+																					};
+																				};
+																			};
+																		};
+																	};
+																};
+															};
+														};
+													};
+												};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _Skinney$collections_ng$CollectionsNg_Hamt$Collision = F2(
+	function (a, b) {
+		return {ctor: 'Collision', _0: a, _1: b};
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$SubTree = function (a) {
+	return {ctor: 'SubTree', _0: a};
+};
+var _Skinney$collections_ng$CollectionsNg_Hamt$Element = F3(
+	function (a, b, c) {
+		return {ctor: 'Element', _0: a, _1: b, _2: c};
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$Empty = {ctor: 'Empty'};
+var _Skinney$collections_ng$CollectionsNg_Hamt$empty = {positionMap: 0, i0: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i1: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i2: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i3: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i4: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i5: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i6: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i7: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i8: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i9: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i10: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i11: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i12: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i13: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i14: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i15: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i16: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i17: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i18: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i19: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i20: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i21: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i22: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i23: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i24: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i25: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i26: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i27: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i28: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i29: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i30: _Skinney$collections_ng$CollectionsNg_Hamt$Empty, i31: _Skinney$collections_ng$CollectionsNg_Hamt$Empty};
+var _Skinney$collections_ng$CollectionsNg_Hamt$set$ = F5(
+	function (shift, hash, key, val, ls) {
+		var newShift = shift + 5;
+		var pos = A2(_Skinney$collections_ng$CollectionsNg_Hamt$hashPositionWithShift, shift, hash);
+		var currValue = A2(_Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex, pos, ls);
+		var _p14 = currValue;
+		switch (_p14.ctor) {
+			case 'Empty':
+				return A3(
+					_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+					pos,
+					A3(_Skinney$collections_ng$CollectionsNg_Hamt$Element, hash, key, val),
+					ls);
+			case 'Element':
+				var _p17 = _p14._2;
+				var _p16 = _p14._1;
+				var _p15 = _p14._0;
+				if (_elm_lang$core$Native_Utils.eq(_p15, hash)) {
+					if (_elm_lang$core$Native_Utils.eq(_p16, key)) {
+						return A3(
+							_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+							pos,
+							A3(_Skinney$collections_ng$CollectionsNg_Hamt$Element, hash, key, val),
+							ls);
+					} else {
+						var element = A2(
+							_Skinney$collections_ng$CollectionsNg_Hamt$Collision,
+							hash,
+							A2(
+								_elm_lang$core$List$sortBy,
+								_elm_lang$core$Basics$fst,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: key, _1: val},
+										{ctor: '_Tuple2', _0: _p16, _1: _p17}
+									])));
+						return A3(_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex, pos, element, ls);
+					}
+				} else {
+					var subNodes = _Skinney$collections_ng$CollectionsNg_Hamt$SubTree(
+						A5(
+							_Skinney$collections_ng$CollectionsNg_Hamt$set$,
+							newShift,
+							hash,
+							key,
+							val,
+							A5(_Skinney$collections_ng$CollectionsNg_Hamt$set$, newShift, _p15, _p16, _p17, _Skinney$collections_ng$CollectionsNg_Hamt$empty)));
+					return A3(_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex, pos, subNodes, ls);
+				}
+			case 'Collision':
+				var _p20 = _p14._0;
+				if (_elm_lang$core$Native_Utils.eq(_p20, hash)) {
+					var newNodes = A2(
+						_elm_lang$core$List$sortBy,
+						_elm_lang$core$Basics$fst,
+						A2(
+							F2(
+								function (x, y) {
+									return A2(_elm_lang$core$List_ops['::'], x, y);
+								}),
+							{ctor: '_Tuple2', _0: key, _1: val},
+							A2(
+								_elm_lang$core$List$filter,
+								function (_p18) {
+									var _p19 = _p18;
+									return !_elm_lang$core$Native_Utils.eq(_p19._0, key);
+								},
+								_p14._1)));
+					return A3(
+						_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+						pos,
+						A2(_Skinney$collections_ng$CollectionsNg_Hamt$Collision, hash, newNodes),
+						ls);
+				} else {
+					var collisionPos = A2(_Skinney$collections_ng$CollectionsNg_Hamt$hashPositionWithShift, newShift, _p20);
+					var subNodes = _Skinney$collections_ng$CollectionsNg_Hamt$SubTree(
+						A5(
+							_Skinney$collections_ng$CollectionsNg_Hamt$set$,
+							newShift,
+							hash,
+							key,
+							val,
+							A3(_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex, collisionPos, currValue, _Skinney$collections_ng$CollectionsNg_Hamt$empty)));
+					return A3(_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex, pos, subNodes, ls);
+				}
+			default:
+				var sub = A5(_Skinney$collections_ng$CollectionsNg_Hamt$set$, newShift, hash, key, val, _p14._0);
+				return A3(
+					_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+					pos,
+					_Skinney$collections_ng$CollectionsNg_Hamt$SubTree(sub),
+					ls);
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$set = F4(
+	function (hash, key, val, ls) {
+		return A5(_Skinney$collections_ng$CollectionsNg_Hamt$set$, 0, hash, key, val, ls);
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$getFirstValue$ = F2(
+	function (pos, ls) {
+		getFirstValue$:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(pos, 31) > 0) {
+				return _Skinney$collections_ng$CollectionsNg_Hamt$Empty;
+			} else {
+				var node = A2(_Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex, pos, ls);
+				var _p21 = node;
+				if (_p21.ctor === 'Empty') {
+					var _v31 = pos + 1,
+						_v32 = ls;
+					pos = _v31;
+					ls = _v32;
+					continue getFirstValue$;
+				} else {
+					return node;
+				}
+			}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$getFirstValue = function (ls) {
+	return A2(_Skinney$collections_ng$CollectionsNg_Hamt$getFirstValue$, 0, ls);
+};
+var _Skinney$collections_ng$CollectionsNg_Hamt$remove$ = F4(
+	function (shift, hash, key, nl) {
+		var pos = A2(_Skinney$collections_ng$CollectionsNg_Hamt$hashPositionWithShift, shift, hash);
+		var node = A2(_Skinney$collections_ng$CollectionsNg_Hamt$valueByIndex, pos, nl);
+		var _p22 = node;
+		switch (_p22.ctor) {
+			case 'Empty':
+				return nl;
+			case 'Element':
+				return _elm_lang$core$Native_Utils.eq(_p22._1, key) ? A3(_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex, pos, _Skinney$collections_ng$CollectionsNg_Hamt$Empty, nl) : nl;
+			case 'SubTree':
+				var newSub = A4(_Skinney$collections_ng$CollectionsNg_Hamt$remove$, shift + 5, hash, key, _p22._0);
+				return _elm_lang$core$Native_Utils.eq(
+					_Skinney$collections_ng$CollectionsNg_Hamt$countBits(newSub.positionMap),
+					1) ? A3(
+					_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+					pos,
+					_Skinney$collections_ng$CollectionsNg_Hamt$getFirstValue(newSub),
+					nl) : A3(
+					_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+					pos,
+					_Skinney$collections_ng$CollectionsNg_Hamt$SubTree(newSub),
+					nl);
+			default:
+				var newCollision = A2(
+					_elm_lang$core$List$filter,
+					function (_p23) {
+						var _p24 = _p23;
+						return !_elm_lang$core$Native_Utils.eq(_p24._0, key);
+					},
+					_p22._1);
+				var newLength = _elm_lang$core$List$length(newCollision);
+				if (_elm_lang$core$Native_Utils.eq(newLength, 1)) {
+					var _p25 = _elm_lang$core$List$head(newCollision);
+					if (_p25.ctor === 'Just') {
+						return A3(
+							_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+							pos,
+							A3(_Skinney$collections_ng$CollectionsNg_Hamt$Element, hash, _p25._0._0, _p25._0._1),
+							nl);
+					} else {
+						return _elm_lang$core$Native_Utils.crashCase(
+							'CollectionsNg.Hamt',
+							{
+								start: {line: 490, column: 25},
+								end: {line: 495, column: 70}
+							},
+							_p25)('This should not happen.');
+					}
+				} else {
+					return A3(
+						_Skinney$collections_ng$CollectionsNg_Hamt$setByIndex,
+						pos,
+						A2(_Skinney$collections_ng$CollectionsNg_Hamt$Collision, hash, newCollision),
+						nl);
+				}
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Hamt$remove = F3(
+	function (hash, key, nl) {
+		return A4(_Skinney$collections_ng$CollectionsNg_Hamt$remove$, 0, hash, key, nl);
+	});

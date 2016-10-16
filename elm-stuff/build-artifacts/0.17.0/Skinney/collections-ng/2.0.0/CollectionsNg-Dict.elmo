@@ -1,0 +1,261 @@
+var _Skinney$collections_ng$CollectionsNg_Dict$foldr = F3(
+	function (f, acc, t) {
+		return A3(_Skinney$collections_ng$CollectionsNg_Hamt$foldl, f, acc, t);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$foldl = F3(
+	function (f, acc, dict) {
+		return A3(_Skinney$collections_ng$CollectionsNg_Hamt$foldl, f, acc, dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$values = function (dict) {
+	return A3(
+		_Skinney$collections_ng$CollectionsNg_Dict$foldl,
+		F3(
+			function (_p0, v, acc) {
+				return A2(_elm_lang$core$List_ops['::'], v, acc);
+			}),
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		dict);
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$keys = function (dict) {
+	return A3(
+		_Skinney$collections_ng$CollectionsNg_Dict$foldl,
+		F3(
+			function (k, _p1, acc) {
+				return A2(_elm_lang$core$List_ops['::'], k, acc);
+			}),
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		dict);
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$toList = function (dict) {
+	return A3(
+		_Skinney$collections_ng$CollectionsNg_Dict$foldl,
+		F3(
+			function (k, v, acc) {
+				return A2(
+					_elm_lang$core$List_ops['::'],
+					{ctor: '_Tuple2', _0: k, _1: v},
+					acc);
+			}),
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		dict);
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$merge = F6(
+	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
+		var rightSortedPairs = A2(
+			_elm_lang$core$List$sortBy,
+			_elm_lang$core$Basics$fst,
+			_Skinney$collections_ng$CollectionsNg_Dict$toList(rightDict));
+		var leftSortedPairs = A2(
+			_elm_lang$core$List$sortBy,
+			_elm_lang$core$Basics$fst,
+			_Skinney$collections_ng$CollectionsNg_Dict$toList(leftDict));
+		var stepState = F2(
+			function (_p3, _p2) {
+				stepState:
+				while (true) {
+					var _p4 = _p3;
+					var _p13 = _p4._1;
+					var _p12 = _p4._0;
+					var _p5 = _p2;
+					var _p11 = _p5._1;
+					var _p10 = _p5._0;
+					var _p6 = _p10;
+					if (_p6.ctor === '[]') {
+						return {
+							ctor: '_Tuple2',
+							_0: _p10,
+							_1: A3(rightStep, _p12, _p13, _p11)
+						};
+					} else {
+						var _p9 = _p6._1;
+						var _p8 = _p6._0._1;
+						var _p7 = _p6._0._0;
+						if (_elm_lang$core$Native_Utils.cmp(_p7, _p12) < 0) {
+							var _v3 = {ctor: '_Tuple2', _0: _p12, _1: _p13},
+								_v4 = {
+								ctor: '_Tuple2',
+								_0: _p9,
+								_1: A3(leftStep, _p7, _p8, _p11)
+							};
+							_p3 = _v3;
+							_p2 = _v4;
+							continue stepState;
+						} else {
+							if (_elm_lang$core$Native_Utils.cmp(_p7, _p12) > 0) {
+								return {
+									ctor: '_Tuple2',
+									_0: _p10,
+									_1: A3(rightStep, _p12, _p13, _p11)
+								};
+							} else {
+								return {
+									ctor: '_Tuple2',
+									_0: _p9,
+									_1: A4(bothStep, _p7, _p8, _p13, _p11)
+								};
+							}
+						}
+					}
+				}
+			});
+		var _p14 = A3(
+			_elm_lang$core$List$foldl,
+			stepState,
+			{ctor: '_Tuple2', _0: leftSortedPairs, _1: initialResult},
+			rightSortedPairs);
+		var leftovers = _p14._0;
+		var intermediateResult = _p14._1;
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (_p15, result) {
+					var _p16 = _p15;
+					return A3(leftStep, _p16._0, _p16._1, result);
+				}),
+			intermediateResult,
+			leftovers);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$size = _Skinney$collections_ng$CollectionsNg_Hamt$size;
+var _Skinney$collections_ng$CollectionsNg_Dict$isEmpty = function (dict) {
+	return _elm_lang$core$Native_Utils.eq(dict, _Skinney$collections_ng$CollectionsNg_Hamt$empty);
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$empty = _Skinney$collections_ng$CollectionsNg_Hamt$empty;
+var _Skinney$collections_ng$CollectionsNg_Dict$hashFn = function (obj) {
+	return A2(
+		_Skinney$murmur3$Murmur3$hashString,
+		19456,
+		_elm_lang$core$Basics$toString(obj));
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$get = F2(
+	function (key, dict) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Hamt$get,
+			_Skinney$collections_ng$CollectionsNg_Dict$hashFn(key),
+			key,
+			dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$member = F2(
+	function (key, dict) {
+		var _p17 = A2(_Skinney$collections_ng$CollectionsNg_Dict$get, key, dict);
+		if (_p17.ctor === 'Just') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$insert = F3(
+	function (key, value, dict) {
+		return A4(
+			_Skinney$collections_ng$CollectionsNg_Hamt$set,
+			_Skinney$collections_ng$CollectionsNg_Dict$hashFn(key),
+			key,
+			value,
+			dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$singleton = F2(
+	function (key, val) {
+		return A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, key, val, _Skinney$collections_ng$CollectionsNg_Dict$empty);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$fromList = function (list) {
+	return A3(
+		_elm_lang$core$List$foldl,
+		F2(
+			function (_p18, acc) {
+				var _p19 = _p18;
+				return A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, _p19._0, _p19._1, acc);
+			}),
+		_Skinney$collections_ng$CollectionsNg_Dict$empty,
+		list);
+};
+var _Skinney$collections_ng$CollectionsNg_Dict$map = F2(
+	function (f, dict) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Hamt$foldl,
+			F3(
+				function (key, val, acc) {
+					return A3(
+						_Skinney$collections_ng$CollectionsNg_Dict$insert,
+						key,
+						A2(f, key, val),
+						acc);
+				}),
+			_Skinney$collections_ng$CollectionsNg_Dict$empty,
+			dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$filter = F2(
+	function (predicate, dictionary) {
+		var add = F3(
+			function (key, value, dict) {
+				return A2(predicate, key, value) ? A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, key, value, dict) : dict;
+			});
+		return A3(_Skinney$collections_ng$CollectionsNg_Dict$foldl, add, _Skinney$collections_ng$CollectionsNg_Dict$empty, dictionary);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$intersect = F2(
+	function (t1, t2) {
+		return A2(
+			_Skinney$collections_ng$CollectionsNg_Dict$filter,
+			F2(
+				function (k, _p20) {
+					return A2(_Skinney$collections_ng$CollectionsNg_Dict$member, k, t2);
+				}),
+			t1);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$partition = F2(
+	function (predicate, dict) {
+		var add = F3(
+			function (key, value, _p21) {
+				var _p22 = _p21;
+				var _p24 = _p22._1;
+				var _p23 = _p22._0;
+				return A2(predicate, key, value) ? {
+					ctor: '_Tuple2',
+					_0: A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, key, value, _p23),
+					_1: _p24
+				} : {
+					ctor: '_Tuple2',
+					_0: _p23,
+					_1: A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, key, value, _p24)
+				};
+			});
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Dict$foldl,
+			add,
+			{ctor: '_Tuple2', _0: _Skinney$collections_ng$CollectionsNg_Dict$empty, _1: _Skinney$collections_ng$CollectionsNg_Dict$empty},
+			dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$union = F2(
+	function (t1, t2) {
+		return A3(_Skinney$collections_ng$CollectionsNg_Dict$foldl, _Skinney$collections_ng$CollectionsNg_Dict$insert, t2, t1);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$remove = F2(
+	function (key, dict) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Hamt$remove,
+			_Skinney$collections_ng$CollectionsNg_Dict$hashFn(key),
+			key,
+			dict);
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$update = F3(
+	function (fn, key, dict) {
+		var _p25 = fn(
+			A2(_Skinney$collections_ng$CollectionsNg_Dict$get, key, dict));
+		if (_p25.ctor === 'Just') {
+			return A3(_Skinney$collections_ng$CollectionsNg_Dict$insert, key, _p25._0, dict);
+		} else {
+			return A2(_Skinney$collections_ng$CollectionsNg_Dict$remove, key, dict);
+		}
+	});
+var _Skinney$collections_ng$CollectionsNg_Dict$diff = F2(
+	function (t1, t2) {
+		return A3(
+			_Skinney$collections_ng$CollectionsNg_Dict$foldl,
+			F3(
+				function (k, v, t) {
+					return A2(_Skinney$collections_ng$CollectionsNg_Dict$remove, k, t);
+				}),
+			t1,
+			t2);
+	});
