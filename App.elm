@@ -72,6 +72,7 @@ view model =
           identity
       combinations = 
         reorder (Util.combinations lists)
+          |> List.filter (\list -> List.length list > 0)
   in 
     div
       [ class "app" ]
@@ -84,7 +85,12 @@ view model =
               [ text "Lists" ]
           , div 
               [ class "list-names" ]
-              (List.map (listName model.selected) (Dict.keys model.lists))
+              (List.map2 
+                (listName model.selected) 
+                (Dict.keys model.lists)
+                (model.lists |> Dict.values |> List.map List.length)
+
+              )
           , div 
               [ classList
                   [ ("shuffle", True)
@@ -97,7 +103,7 @@ view model =
           ]
       , div 
           [ class "combinations-title" ]
-          [ text "Combinations" ]
+          [ text (Util.labelWithCount "Combinations" (List.length combinations))]
       , div
           [ class "combinations" ]
           (List.map combination combinations)
@@ -132,8 +138,8 @@ p3 = "Here's another quick example. We'll take a list of letters, like A and Z, 
 p4 = "Check out the example below. There are four lists you can mix and match. Feel free to edit them too (just click on the pencil icon)."
 
 
-listName: Set String -> String -> Html Msg
-listName selected name = 
+listName: Set String -> String -> Int -> Html Msg
+listName selected name nItems = 
   div
     [ classList
         [ ("list-name", True)
@@ -142,7 +148,7 @@ listName selected name =
         ]
     , onClick (ToggleSelected name)
     ]
-    [ text name ]  
+    [ text (Util.labelWithCount name nItems) ]  
 
 
 combination items =

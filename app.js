@@ -9267,6 +9267,19 @@ var _user$project$Types$ToggleSelected = function (a) {
 	return {ctor: 'ToggleSelected', _0: a};
 };
 
+var _user$project$Util$labelWithCount = F2(
+	function (string, number) {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			string,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				' (',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(number),
+					')')));
+	});
 var _user$project$Util$shuffle = function (x) {
 	var generator = _elm_community$random_extra$Random_Array$shuffle(
 		_elm_lang$core$Array$fromList(x));
@@ -9334,8 +9347,8 @@ var _user$project$App$combination = function (items) {
 				A2(_elm_lang$core$String$join, ', ', items))
 			]));
 };
-var _user$project$App$listName = F2(
-	function (selected, name) {
+var _user$project$App$listName = F3(
+	function (selected, name, nItems) {
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
@@ -9356,7 +9369,8 @@ var _user$project$App$listName = F2(
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html$text(name)
+					_elm_lang$html$Html$text(
+					A2(_user$project$Util$labelWithCount, name, nItems))
 				]));
 	});
 var _user$project$App$p4 = 'Check out the example below. There are four lists you can mix and match. Feel free to edit them too (just click on the pencil icon).';
@@ -9454,8 +9468,15 @@ var _user$project$App$view = function (model) {
 			_elm_lang$core$List$map,
 			getList,
 			_elm_lang$core$Set$toList(model.selected)));
-	var combinations = reorder(
-		_user$project$Util$combinations(lists));
+	var combinations = A2(
+		_elm_lang$core$List$filter,
+		function (list) {
+			return _elm_lang$core$Native_Utils.cmp(
+				_elm_lang$core$List$length(list),
+				0) > 0;
+		},
+		reorder(
+			_user$project$Util$combinations(lists)));
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -9490,10 +9511,14 @@ var _user$project$App$view = function (model) {
 							[
 								_elm_lang$html$Html_Attributes$class('list-names')
 							]),
-						A2(
-							_elm_lang$core$List$map,
+						A3(
+							_elm_lang$core$List$map2,
 							_user$project$App$listName(model.selected),
-							_elm_lang$core$Dict$keys(model.lists))),
+							_elm_lang$core$Dict$keys(model.lists),
+							A2(
+								_elm_lang$core$List$map,
+								_elm_lang$core$List$length,
+								_elm_lang$core$Dict$values(model.lists)))),
 						A2(
 						_elm_lang$html$Html$div,
 						_elm_lang$core$Native_List.fromArray(
@@ -9520,7 +9545,11 @@ var _user$project$App$view = function (model) {
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('Combinations')
+						_elm_lang$html$Html$text(
+						A2(
+							_user$project$Util$labelWithCount,
+							'Combinations',
+							_elm_lang$core$List$length(combinations)))
 					])),
 				A2(
 				_elm_lang$html$Html$div,

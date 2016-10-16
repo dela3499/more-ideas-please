@@ -44,3 +44,8 @@ shuffle x =
         Random.step generator (Random.initialSeed 123)
   in 
     Array.toList x'       
+
+
+labelWithCount: String -> Int -> String
+labelWithCount string number = 
+  string ++ " (" ++ (toString number) ++ ")"    
