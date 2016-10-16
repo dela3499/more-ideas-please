@@ -111,3 +111,27 @@ body {
 	padding-bottom: 6vw;
 }
 
+@media (min-width: 1000px) {
+	body {
+		font-size: 1.5em;
+		line-height: 1.2em;
+	}
+
+	.app {
+		width: 50%;
+		margin: auto;
+	}
+
+	.logo > * {
+		font-size: 4em;
+		line-height: 1em;
+	}
+
+	.list-name {
+		line-height: 1.5em;
+	}
+
+	.intro p {
+		margin-bottom: 1em;
+	}
+}
