@@ -112,6 +112,12 @@ body {
 	height: 100%;
 }
 
+.combination {
+	border-bottom: 2px solid lightgrey;
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+}
+
 @media (min-width: 1000px) {
 	body {
 		font-size: 1.5em;
@@ -134,7 +140,7 @@ body {
 	}
 
 	.intro img {
-		width: 30%;
+		width: 50%;
 		display: block;
 		margin: auto;
 	}
