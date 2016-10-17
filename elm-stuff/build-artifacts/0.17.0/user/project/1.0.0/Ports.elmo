@@ -1,0 +1,11 @@
+var _user$project$Ports$randomSeed = _elm_lang$core$Native_Platform.incomingPort('randomSeed', _elm_lang$core$Json_Decode$int);
+var _user$project$Ports$clearField = _elm_lang$core$Native_Platform.outgoingPort(
+	'clearField',
+	function (v) {
+		return v;
+	});
+var _user$project$Ports$setInputValue = _elm_lang$core$Native_Platform.outgoingPort(
+	'setInputValue',
+	function (v) {
+		return [v._0, v._1];
+	});

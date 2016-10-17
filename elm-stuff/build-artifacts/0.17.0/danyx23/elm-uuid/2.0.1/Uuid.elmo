@@ -1,0 +1,13 @@
+var _danyx23$elm_uuid$Uuid$toString = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0;
+};
+var _danyx23$elm_uuid$Uuid$Uuid = function (a) {
+	return {ctor: 'Uuid', _0: a};
+};
+var _danyx23$elm_uuid$Uuid$fromString = function (text) {
+	return _danyx23$elm_uuid$Uuid_Barebones$isValidUuid(text) ? _elm_lang$core$Maybe$Just(
+		_danyx23$elm_uuid$Uuid$Uuid(
+			_elm_lang$core$String$toLower(text))) : _elm_lang$core$Maybe$Nothing;
+};
+var _danyx23$elm_uuid$Uuid$uuidGenerator = A2(_mgold$elm_random_pcg$Random_Pcg$map, _danyx23$elm_uuid$Uuid$Uuid, _danyx23$elm_uuid$Uuid_Barebones$uuidStringGenerator);

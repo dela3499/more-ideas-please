@@ -118,7 +118,7 @@ body {
 	float: left;
 }
 
-.combinations {
+.combinations, .input-container {
 	clear: left;
 	padding-bottom: 6vw;
 	min-height: 100%;
@@ -131,6 +131,11 @@ body {
 }
 
 /* editing */
+
+.new-list.button {
+	padding-top: 30px;
+	/*background: red;*/
+}
 
 .body.editing .list-name {
 	color: rgba(0,0,0,0.8);
@@ -212,6 +217,24 @@ button:focus {
 	clear: left;
 	font-weight: bold;
 	display: inline-block;
+}
+
+.delete.button {
+	display: block;
+	background: grey;
+	color: white;
+	padding: 15px 20px 15px 20px;
+	clear: left;
+	font-weight: bold;
+	display: table;
+	margin-top: 30px;
+	opacity: 0.6;
+	/*display: inline-block;*/
+	/*float: right;*/
+}
+
+.hide {
+	display: none!important;
 }
 
 @media (min-width: 1000px) {

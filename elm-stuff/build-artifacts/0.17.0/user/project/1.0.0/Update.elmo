@@ -1,0 +1,310 @@
+var _user$project$Update$app = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'ToggleSelected':
+				var selected$ = A2(_user$project$Util$toggleMember, _p0._0, model.selected);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selected: selected$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ToggleShuffle':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							shuffle: _elm_lang$core$Basics$not(model.shuffle)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetMode':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{mode: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetListName':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{name: _p0._0});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'AddItem':
+				var editList = model.editList;
+				var editList$ = (_elm_lang$core$Native_Utils.cmp(
+					_elm_lang$core$String$length(model.editItem),
+					0) > 0) ? _elm_lang$core$Native_Utils.update(
+					editList,
+					{
+						items: A2(
+							_elm_lang$core$Basics_ops['++'],
+							editList.items,
+							_elm_lang$core$Native_List.fromArray(
+								[model.editItem]))
+					}) : editList;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$, editItem: ''}),
+					_1: _user$project$Ports$clearField('list-item-input')
+				};
+			case 'RemoveItem':
+				var editList = model.editList;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{
+						items: A2(_user$project$Util$dropNth, editList.items, _p0._0)
+					});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetItem':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{editItem: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Save':
+				var _p1 = A2(_mgold$elm_random_pcg$Random_Pcg$step, _danyx23$elm_uuid$Uuid_Barebones$uuidStringGenerator, model.seed);
+				var id = _p1._0;
+				var seed$ = _p1._1;
+				var editList$ = {
+					name: '',
+					items: _elm_lang$core$Native_List.fromArray(
+						[]),
+					id: id,
+					created: 0.0
+				};
+				var cmds = _elm_lang$core$Platform_Cmd$batch(
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_shmookey$cmd_extra$Cmd_Extra$message(
+							_user$project$Types$SetFocus(_user$project$Types$ListName)),
+							_shmookey$cmd_extra$Cmd_Extra$message(
+							_user$project$Types$ClearField(_user$project$Types$ListName)),
+							_shmookey$cmd_extra$Cmd_Extra$message(
+							_user$project$Types$ClearField(_user$project$Types$ListItem))
+						]));
+				var editList = model.editList;
+				var newTime = (_elm_lang$core$Native_Utils.cmp(editList.created, 1) > -1) ? editList.created : model.t;
+				var saveList = _elm_lang$core$Native_Utils.update(
+					editList,
+					{created: newTime});
+				var lists = A3(_elm_lang$core$Dict$insert, saveList.id, saveList, model.lists);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{lists: lists, editList: editList$, seed: seed$}),
+					_1: cmds
+				};
+			case 'RecordFocus':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{focus: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetFocus':
+				var _p4 = _p0._0;
+				var _p2 = A2(_elm_lang$core$Debug$log, 'SetFocus', _p4);
+				var _p3 = _p4;
+				switch (_p3.ctor) {
+					case 'NoFocus':
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					case 'ListName':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A3(
+								_elm_lang$core$Task$perform,
+								_user$project$Types$ErrorMsg,
+								_user$project$Types$SuccessMsg,
+								_elm_lang$dom$Dom$focus('list-name-input'))
+						};
+					default:
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: A3(
+								_elm_lang$core$Task$perform,
+								_user$project$Types$ErrorMsg,
+								_user$project$Types$SuccessMsg,
+								_elm_lang$dom$Dom$focus('list-item-input'))
+						};
+				}
+			case 'ClearField':
+				var _p5 = _p0._0;
+				switch (_p5.ctor) {
+					case 'ListName':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: _user$project$Ports$clearField('list-name-input')
+						};
+					case 'ListItem':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: _user$project$Ports$clearField('list-item-input')
+						};
+					default:
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'KeyUp':
+				var state = {ctor: '_Tuple2', _0: model.focus, _1: _p0._0};
+				var _p6 = state;
+				_v3_3:
+				do {
+					if (_p6.ctor === '_Tuple2') {
+						switch (_p6._0.ctor) {
+							case 'NoFocus':
+								return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+							case 'ListName':
+								if (_p6._1 === 13) {
+									return {
+										ctor: '_Tuple2',
+										_0: model,
+										_1: _shmookey$cmd_extra$Cmd_Extra$message(
+											_user$project$Types$SetFocus(_user$project$Types$ListItem))
+									};
+								} else {
+									break _v3_3;
+								}
+							default:
+								if (_p6._1 === 13) {
+									return {
+										ctor: '_Tuple2',
+										_0: model,
+										_1: _shmookey$cmd_extra$Cmd_Extra$message(_user$project$Types$AddItem)
+									};
+								} else {
+									break _v3_3;
+								}
+						}
+					} else {
+						break _v3_3;
+					}
+				} while(false);
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'NoMsg':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'ErrorMsg':
+				var _p7 = A2(_elm_lang$core$Debug$log, 'ErrorMsg', _p0._0);
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'SuccessMsg':
+				var _p8 = A2(_elm_lang$core$Debug$log, 'SuccessMsg', _p0._0);
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'SetInitialSeed':
+				var editList = model.editList;
+				var seed = _mgold$elm_random_pcg$Random_Pcg$initialSeed(_p0._0);
+				var _p9 = A2(_mgold$elm_random_pcg$Random_Pcg$step, _danyx23$elm_uuid$Uuid_Barebones$uuidStringGenerator, seed);
+				var id = _p9._0;
+				var seed$ = _p9._1;
+				var editList$ = _elm_lang$core$Native_Utils.update(
+					editList,
+					{id: id, created: model.t});
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{seed: seed$, editList: editList$}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Edit':
+				var _p11 = _p0._0;
+				if (_elm_lang$core$Native_Utils.eq(_p11.id, '')) {
+					var cmds = _elm_lang$core$Platform_Cmd$batch(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_shmookey$cmd_extra$Cmd_Extra$message(
+								_user$project$Types$SetFocus(_user$project$Types$ListName)),
+								_shmookey$cmd_extra$Cmd_Extra$message(
+								_user$project$Types$ClearField(_user$project$Types$ListName)),
+								_shmookey$cmd_extra$Cmd_Extra$message(
+								_user$project$Types$ClearField(_user$project$Types$ListItem))
+							]));
+					var _p10 = A2(_mgold$elm_random_pcg$Random_Pcg$step, _danyx23$elm_uuid$Uuid_Barebones$uuidStringGenerator, model.seed);
+					var id = _p10._0;
+					var seed$ = _p10._1;
+					var editList = _elm_lang$core$Native_Utils.update(
+						_p11,
+						{id: id});
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{editList: editList, seed: seed$}),
+						_1: cmds
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{editList: _p11}),
+						_1: _shmookey$cmd_extra$Cmd_Extra$message(
+							A2(_user$project$Types$SetInputValue, _user$project$Types$ListName, _p11.name))
+					};
+				}
+			case 'SetInputValue':
+				var _p13 = _p0._1;
+				var _p12 = _p0._0;
+				switch (_p12.ctor) {
+					case 'ListName':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: _user$project$Ports$setInputValue(
+								{ctor: '_Tuple2', _0: 'list-name-input', _1: _p13})
+						};
+					case 'ListItem':
+						return {
+							ctor: '_Tuple2',
+							_0: model,
+							_1: _user$project$Ports$setInputValue(
+								{ctor: '_Tuple2', _0: 'list-item-input', _1: _p13})
+						};
+					default:
+						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'SetTime':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{t: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var lists$ = A2(_elm_lang$core$Dict$remove, model.editList.id, model.lists);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{lists: lists$}),
+					_1: _shmookey$cmd_extra$Cmd_Extra$message(
+						_user$project$Types$Edit(_user$project$Util$emptyList))
+				};
+		}
+	});

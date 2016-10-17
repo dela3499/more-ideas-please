@@ -1,0 +1,10 @@
+- get enter/return keycode to trigger AddItem
+- setup code to track focus (necessary for accurately triggering AddItem)
+- animation to show when a list is added
+- hide items when there there aren't any
+- clear inputs after saving list or adding item
+- improve intro text
+- remove intro image
+- change model so editList is List', rather than a special type, then add an item field to the model. (So you don't need a separate case for current and new lists)
+- fix desktop styles
+- Add error messages and validation - i.e. needs a name, and at least one item per list.

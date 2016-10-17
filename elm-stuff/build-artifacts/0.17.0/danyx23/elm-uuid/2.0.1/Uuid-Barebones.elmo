@@ -1,0 +1,100 @@
+var _danyx23$elm_uuid$Uuid_Barebones$hexGenerator = A2(_mgold$elm_random_pcg$Random_Pcg$int, 0, 15);
+var _danyx23$elm_uuid$Uuid_Barebones$hexDigits = function () {
+	var mapChars = F2(
+		function (offset, digit) {
+			return _elm_lang$core$Char$fromCode(digit + offset);
+		});
+	return _elm_lang$core$Array$fromList(
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$List$map,
+				mapChars(48),
+				_elm_lang$core$Native_List.range(0, 9)),
+			A2(
+				_elm_lang$core$List$map,
+				mapChars(97),
+				_elm_lang$core$Native_List.range(0, 5))));
+}();
+var _danyx23$elm_uuid$Uuid_Barebones$mapToHex = function (index) {
+	var maybeResult = A2(_elm_lang$core$Basics$flip, _elm_lang$core$Array$get, _danyx23$elm_uuid$Uuid_Barebones$hexDigits)(index);
+	var _p0 = maybeResult;
+	if (_p0.ctor === 'Nothing') {
+		return _elm_lang$core$Native_Utils.chr('x');
+	} else {
+		return _p0._0;
+	}
+};
+var _danyx23$elm_uuid$Uuid_Barebones$uuidRegex = _elm_lang$core$Regex$regex('^[0-9A-Fa-f]{8,8}-[0-9A-Fa-f]{4,4}-[1-5][0-9A-Fa-f]{3,3}-[8-9A-Ba-b][0-9A-Fa-f]{3,3}-[0-9A-Fa-f]{12,12}$');
+var _danyx23$elm_uuid$Uuid_Barebones$limitDigitRange8ToB = function (digit) {
+	return A2(
+		_elm_lang$core$Bitwise$or,
+		A2(_elm_lang$core$Bitwise$and, digit, 3),
+		8);
+};
+var _danyx23$elm_uuid$Uuid_Barebones$toUuidString = function (thirtyOneHexDigits) {
+	return _elm_lang$core$String$concat(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(_elm_lang$core$List$take, 8, thirtyOneHexDigits))),
+				'-',
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(
+						_elm_lang$core$List$take,
+						4,
+						A2(_elm_lang$core$List$drop, 8, thirtyOneHexDigits)))),
+				'-',
+				'4',
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(
+						_elm_lang$core$List$take,
+						3,
+						A2(_elm_lang$core$List$drop, 12, thirtyOneHexDigits)))),
+				'-',
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(
+						_elm_lang$core$List$map,
+						_danyx23$elm_uuid$Uuid_Barebones$limitDigitRange8ToB,
+						A2(
+							_elm_lang$core$List$take,
+							1,
+							A2(_elm_lang$core$List$drop, 15, thirtyOneHexDigits))))),
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(
+						_elm_lang$core$List$take,
+						3,
+						A2(_elm_lang$core$List$drop, 16, thirtyOneHexDigits)))),
+				'-',
+				_elm_lang$core$String$fromList(
+				A2(
+					_elm_lang$core$List$map,
+					_danyx23$elm_uuid$Uuid_Barebones$mapToHex,
+					A2(
+						_elm_lang$core$List$take,
+						12,
+						A2(_elm_lang$core$List$drop, 19, thirtyOneHexDigits))))
+			]));
+};
+var _danyx23$elm_uuid$Uuid_Barebones$isValidUuid = function (uuidAsString) {
+	return A2(_elm_lang$core$Regex$contains, _danyx23$elm_uuid$Uuid_Barebones$uuidRegex, uuidAsString);
+};
+var _danyx23$elm_uuid$Uuid_Barebones$uuidStringGenerator = A2(
+	_mgold$elm_random_pcg$Random_Pcg$map,
+	_danyx23$elm_uuid$Uuid_Barebones$toUuidString,
+	A2(_mgold$elm_random_pcg$Random_Pcg$list, 31, _danyx23$elm_uuid$Uuid_Barebones$hexGenerator));

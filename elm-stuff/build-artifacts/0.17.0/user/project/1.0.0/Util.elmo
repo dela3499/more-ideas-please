@@ -9,11 +9,12 @@ var _user$project$Util$dropNth = F2(
 		return _elm_lang$core$List$concat(
 			A2(_elm_lang$core$List$indexedMap, keep, list));
 	});
-var _user$project$Util$dummyList = {
-	id: 'edit',
-	name: 'my new list',
+var _user$project$Util$emptyList = {
+	name: '',
 	items: _elm_lang$core$Native_List.fromArray(
-		[])
+		[]),
+	created: 0.0,
+	id: ''
 };
 var _user$project$Util$getJusts = function (maybes) {
 	var prependJust = F2(

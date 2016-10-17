@@ -69,12 +69,13 @@ getJusts maybes =
     List.foldl prependJust [] maybes
 
 
-dummyList: List'
-dummyList = 
-  { id = "edit"
-  , name = "my new list"
+emptyList: List'
+emptyList = 
+  { name = ""
   , items = []
-  }    
+  , created = 0.0
+  , id = ""
+  }
 
 
 dropNth list n = 
@@ -87,3 +88,7 @@ dropNth list n =
     list
       |> List.indexedMap keep
       |> List.concat
+
+
+--getNewList time =
+  

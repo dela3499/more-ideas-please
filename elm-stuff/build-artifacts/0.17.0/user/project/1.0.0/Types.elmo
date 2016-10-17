@@ -1,15 +1,44 @@
-var _user$project$Types$Model = F5(
-	function (a, b, c, d, e) {
-		return {lists: a, selected: b, shuffle: c, mode: d, editList: e};
+var _user$project$Types$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {lists: a, selected: b, shuffle: c, mode: d, editList: e, editItem: f, focus: g, seed: h, t: i};
 	});
-var _user$project$Types$List$ = F3(
-	function (a, b, c) {
-		return {id: a, name: b, items: c};
+var _user$project$Types$List$ = F4(
+	function (a, b, c, d) {
+		return {id: a, name: b, items: c, created: d};
 	});
-var _user$project$Types$EditList = F3(
-	function (a, b, c) {
-		return {name: a, items: b, item: c};
+var _user$project$Types$Delete = {ctor: 'Delete'};
+var _user$project$Types$SetTime = function (a) {
+	return {ctor: 'SetTime', _0: a};
+};
+var _user$project$Types$SetInputValue = F2(
+	function (a, b) {
+		return {ctor: 'SetInputValue', _0: a, _1: b};
 	});
+var _user$project$Types$Edit = function (a) {
+	return {ctor: 'Edit', _0: a};
+};
+var _user$project$Types$SetInitialSeed = function (a) {
+	return {ctor: 'SetInitialSeed', _0: a};
+};
+var _user$project$Types$ClearField = function (a) {
+	return {ctor: 'ClearField', _0: a};
+};
+var _user$project$Types$SuccessMsg = function (a) {
+	return {ctor: 'SuccessMsg', _0: a};
+};
+var _user$project$Types$ErrorMsg = function (a) {
+	return {ctor: 'ErrorMsg', _0: a};
+};
+var _user$project$Types$NoMsg = {ctor: 'NoMsg'};
+var _user$project$Types$KeyUp = function (a) {
+	return {ctor: 'KeyUp', _0: a};
+};
+var _user$project$Types$SetFocus = function (a) {
+	return {ctor: 'SetFocus', _0: a};
+};
+var _user$project$Types$RecordFocus = function (a) {
+	return {ctor: 'RecordFocus', _0: a};
+};
 var _user$project$Types$Save = {ctor: 'Save'};
 var _user$project$Types$SetItem = function (a) {
 	return {ctor: 'SetItem', _0: a};
@@ -28,11 +57,8 @@ var _user$project$Types$ToggleShuffle = {ctor: 'ToggleShuffle'};
 var _user$project$Types$ToggleSelected = function (a) {
 	return {ctor: 'ToggleSelected', _0: a};
 };
-var _user$project$Types$Editing = function (a) {
-	return {ctor: 'Editing', _0: a};
-};
+var _user$project$Types$Editing = {ctor: 'Editing'};
 var _user$project$Types$Viewing = {ctor: 'Viewing'};
-var _user$project$Types$ExistingList = function (a) {
-	return {ctor: 'ExistingList', _0: a};
-};
-var _user$project$Types$NewList = {ctor: 'NewList'};
+var _user$project$Types$ListItem = {ctor: 'ListItem'};
+var _user$project$Types$ListName = {ctor: 'ListName'};
+var _user$project$Types$NoFocus = {ctor: 'NoFocus'};
